@@ -1,0 +1,27 @@
+Job Title: Senior Python & Machine Learning Engineer
+
+Company: Nexus Data Labs
+Location: Remote / Hybrid
+
+Role Overview:
+Nexus Data Labs is seeking a seasoned Senior Python & Machine Learning Engineer to design, build, and optimize our core predictive intelligence platforms and scalable backend microservices. You will work closely with product and data science teams to architect production-ready data pipelines and deterministic machine learning services.
+
+Key Responsibilities:
+- Design, implement, and maintain high-throughput backend APIs using Python, FastAPI, and PostgreSQL.
+- Build classical machine learning pipelines, feature engineering workflows, and text analytics using Scikit-Learn, Pandas, NumPy, and NLTK.
+- Containerize services with Docker and orchestrate resilient deployments on Kubernetes and AWS cloud infrastructure.
+- Establish automated CI/CD deployment pipelines with GitHub Actions and maintain comprehensive unit testing with pytest.
+- Collaborate in Agile Scrum sprints with cross-functional engineering teams and track tasks in Jira.
+
+Minimum Qualifications (Required):
+- At least 5 years of professional software engineering experience.
+- Bachelor's degree in Computer Science, Software Engineering, or related technical STEM discipline.
+- Proficient in Python, SQL, and database design with PostgreSQL.
+- Hands-on experience with classical Machine Learning and NLP (Scikit-Learn, Pandas, NumPy, TF-IDF).
+- Production experience with Docker and Linux systems.
+
+Preferred Qualifications (Nice to Have):
+- Experience with Kubernetes, AWS, or Terraform.
+- Familiarity with FastAPI, Redis, or Apache Kafka.
+- Experience with Unit Testing (pytest) and CI/CD pipelines.
+- Master's degree in Computer Science or Data Science.

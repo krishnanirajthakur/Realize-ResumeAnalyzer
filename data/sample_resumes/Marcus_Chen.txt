@@ -1,0 +1,30 @@
+Marcus Chen
+Email: marcus.chen@example.com | Phone: +1-206-555-0144 | Seattle, WA
+
+Professional Summary
+Full Stack and Backend Software Engineer with 4 years of experience delivering high-performance web applications, REST APIs, and microservices using Python, FastAPI, React, and relational databases.
+
+Technical Skills
+- Languages: Python, JavaScript, TypeScript, SQL, HTML5, CSS3
+- Frameworks: FastAPI, Django, React, Next.js, Node.js
+- Databases: PostgreSQL, MySQL, Redis
+- Infrastructure: Docker, Linux, Git, CI/CD, Agile, Scrum
+
+Professional Experience
+Backend Engineer | CloudMatrix Solutions
+08/2022 - Present
+- Designed and maintained RESTful backend APIs using Python and FastAPI integrated with PostgreSQL.
+- Implemented Docker containerization for local development and staging environments.
+- Created Redis caching strategies to reduce database round-trips for high-traffic endpoints.
+
+Junior Software Developer | Horizon Tech
+07/2020 - 07/2022
+- Developed responsive web interfaces using React and TypeScript backed by Python Django APIs.
+- Wrote unit tests and participated in bi-weekly Agile Scrum sprint reviews using Jira.
+
+Educational Qualifications
+- Bachelor of Science in Computer Science | University of Washington (2020)
+
+Key Projects
+- Real-time Analytics Dashboard: Built full-stack dashboard utilizing FastAPI, React, and PostgreSQL for monitoring system telemetry.
+- Task Queue Manager: Implemented background job worker with Python and Redis for processing asynchronous user tasks.

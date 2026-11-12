@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ResumeIQ - Resume Analysis Workspace</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Inter & JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-dim": "#d2d9f4",
+            "primary-fixed-dim": "#c3c0ff",
+            "on-tertiary": "#ffffff",
+            "secondary": "#006a61",
+            "primary": "#3525cd",
+            "surface-tint": "#4d44e3",
+            "tertiary-fixed": "#e1e0ff",
+            "on-tertiary-fixed": "#07006c",
+            "on-surface": "#131b2e",
+            "outline": "#777587",
+            "surface-container-lowest": "#ffffff",
+            "inverse-primary": "#c3c0ff",
+            "on-primary": "#ffffff",
+            "tertiary": "#3130c0",
+            "inverse-surface": "#283044",
+            "on-secondary-fixed": "#00201d",
+            "error-container": "#ffdad6",
+            "outline-variant": "#c7c4d8",
+            "secondary-container": "#86f2e4",
+            "surface-variant": "#dae2fd",
+            "on-surface-variant": "#464555",
+            "background": "#faf8ff",
+            "inverse-on-surface": "#eef0ff",
+            "tertiary-fixed-dim": "#c0c1ff",
+            "on-primary-container": "#dad7ff",
+            "tertiary-container": "#4b4dd8",
+            "surface-container-highest": "#dae2fd",
+            "secondary-fixed-dim": "#6bd8cb",
+            "on-secondary-container": "#006f66",
+            "on-tertiary-fixed-variant": "#2f2ebe",
+            "on-primary-fixed": "#0f0069",
+            "secondary-fixed": "#89f5e7",
+            "on-error-container": "#93000a",
+            "on-primary-fixed-variant": "#3323cc",
+            "surface-container": "#eaedff",
+            "on-error": "#ffffff",
+            "error": "#ba1a1a",
+            "primary-container": "#4f46e5",
+            "on-secondary-fixed-variant": "#005049",
+            "primary-fixed": "#e2dfff",
+            "surface-container-low": "#f2f3ff",
+            "on-background": "#131b2e",
+            "on-secondary": "#ffffff",
+            "surface-bright": "#faf8ff",
+            "on-tertiary-container": "#d9d8ff",
+            "surface-container-high": "#e2e7ff",
+            "surface": "#faf8ff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-xl": "1.5rem",
+            "space-sm": "0.5rem",
+            "margin": "1.5rem",
+            "space-2xl": "2rem",
+            "space-xs": "0.25rem",
+            "space-2xs": "0.125rem",
+            "margin-mobile": "1rem",
+            "space-lg": "1rem",
+            "gutter-lg": "1.5rem",
+            "space-md": "0.75rem",
+            "gutter": "1rem"
+          },
+          "fontFamily": {
+            "body-md": ["Inter"],
+            "label-mono-md": ["JetBrains Mono"],
+            "headline-sm": ["Inter"],
+            "label-sans-bold": ["Inter"],
+            "headline-xl": ["Inter"],
+            "body-sm": ["Inter"],
+            "headline-lg": ["Inter"],
+            "label-mono-sm": ["JetBrains Mono"],
+            "headline-lg-mobile": ["Inter"],
+            "headline-md": ["Inter"],
+            "body-lg": ["Inter"]
+          },
+          "fontSize": {
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "label-mono-md": ["13px", { "lineHeight": "18px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "headline-sm": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "label-sans-bold": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }],
+            "headline-xl": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.025em", "fontWeight": "700" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "label-mono-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+            "headline-lg-mobile": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      font-size: 20px;
+      line-height: 1;
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md antialiased min-h-screen flex flex-col">
+<!-- ================= SIDE NAVIGATION (Shared Component) ================= -->
+<aside class="fixed left-0 top-0 bottom-0 z-40 w-64 flex flex-col justify-between bg-surface-container-lowest border-r border-outline-variant">
+<div class="flex flex-col">
+<!-- Brand Header -->
+<div class="h-16 px-5 border-b border-outline-variant flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-primary-container text-on-primary flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-on-primary" data-icon="auto_awesome">auto_awesome</span>
+</div>
+<div>
+<div class="text-headline-sm font-headline-sm font-bold tracking-tight text-on-surface leading-tight">ResumeIQ</div>
+<div class="text-label-mono-sm font-label-mono-sm text-on-surface-variant text-[10px]">Talent Intelligence Suite</div>
+</div>
+</div>
+</div>
+<!-- Navigation Links (Active on Resume Analysis) -->
+<nav class="p-3 space-y-1">
+<!-- Dashboard -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface font-medium hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="space_dashboard">space_dashboard</span>
+<span class="text-body-md font-body-md">Dashboard</span>
+</a>
+<!-- Resume Analysis (Active Tab) -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-surface-container text-primary font-semibold border-l-2 border-primary" href="#">
+<span class="material-symbols-outlined" data-icon="analytics" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="text-body-md font-body-md">Resume Analysis</span>
+</a>
+<!-- Bulk Screening -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface font-medium hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="batch_prediction">batch_prediction</span>
+<span class="text-body-md font-body-md">Bulk Screening</span>
+</a>
+<!-- Candidate Comparison -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface font-medium hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="compare_arrows">compare_arrows</span>
+<span class="text-body-md font-body-md">Candidate Comparison</span>
+</a>
+<!-- Skills Analytics -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface font-medium hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+<span class="text-body-md font-body-md">Skills Analytics</span>
+</a>
+<!-- Evaluation Reports -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface font-medium hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="assessment">assessment</span>
+<span class="text-body-md font-body-md">Evaluation Reports</span>
+</a>
+<!-- Dataset & Model Evaluation -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface font-medium hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="tune">tune</span>
+<span class="text-body-md font-body-md">Dataset &amp; Model Evaluation</span>
+</a>
+<!-- Settings -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface font-medium hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-body-md font-body-md">Settings</span>
+</a>
+</nav>
+</div>
+<!-- Sidebar Footer -->
+<div class="p-3 border-t border-outline-variant space-y-1">
+<div class="px-3 py-2 bg-surface-container-low rounded-lg mb-2 flex items-center justify-between border border-outline-variant">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-label-mono-sm font-label-mono-sm text-on-surface-variant">Core Engine v2.4</span>
+</div>
+<button class="text-label-sans-bold font-label-sans-bold text-primary hover:underline">Switch Workspace</button>
+</div>
+<a class="flex items-center gap-3 px-3 py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="memory">memory</span>
+<span class="text-body-sm font-body-sm">System Health</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+<span class="text-body-sm font-body-sm">Help &amp; Docs</span>
+</a>
+</div>
+</aside>
+<!-- ================= TOP NAVIGATION BAR (Shared Component) ================= -->
+<header class="sticky top-0 z-30 w-full pl-64 pr-6 h-16 flex items-center justify-between bg-surface-container-lowest border-b border-outline-variant">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 text-on-surface">
+<span class="material-symbols-outlined text-outline" data-icon="folder_shared">folder_shared</span>
+<span class="text-headline-sm font-headline-sm font-semibold text-primary pb-0.5 border-b-2 border-primary">Senior Machine Learning Engineer (REQ-8492)</span>
+</div>
+<span class="px-2 py-0.5 rounded text-label-mono-sm font-label-mono-sm bg-surface-container text-on-surface-variant border border-outline-variant">Batch: Q3_Tech_Direct</span>
+</div>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-3">
+<button class="h-9 px-3.5 rounded-lg bg-surface-container-lowest border border-outline-variant text-on-surface hover:bg-surface-container-low text-body-md font-semibold flex items-center gap-2 shadow-sm transition-colors">
+<span class="material-symbols-outlined text-outline" data-icon="picture_as_pdf">picture_as_pdf</span>
+        Export Evaluation (PDF)
+      </button>
+<button class="h-9 px-4 rounded-lg bg-primary-container text-on-primary hover:bg-primary font-semibold text-body-md flex items-center gap-1.5 shadow-sm transition-colors">
+<span class="material-symbols-outlined text-on-primary" data-icon="add">add</span>
+        New Analysis
+      </button>
+<div class="h-6 w-px bg-outline-variant mx-1"></div>
+<div class="flex items-center gap-1">
+<button class="p-2 text-on-surface-variant hover:text-on-surface rounded-lg hover:bg-surface-container-low">
+<span class="material-symbols-outlined" data-icon="tune">tune</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-on-surface rounded-lg hover:bg-surface-container-low relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-1 rounded-full text-on-surface-variant hover:text-on-surface ml-1">
+<span class="material-symbols-outlined text-[28px]" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<!-- ================= MAIN ANALYTICS WORKSPACE CANVAS ================= -->
+<main class="pl-64 flex-1 p-6 space-y-6 max-w-[1680px] w-full mx-auto">
+<!-- BREADCRUMB & CONTEXT BANNER -->
+<div class="flex items-center justify-between pb-1 border-b border-outline-variant">
+<div class="flex items-center gap-2 text-body-sm font-body-sm text-on-surface-variant">
+<span>Workspaces</span>
+<span class="material-symbols-outlined text-[14px]" data-icon="chevron_right">chevron_right</span>
+<span>Requisition REQ-8492</span>
+<span class="material-symbols-outlined text-[14px]" data-icon="chevron_right">chevron_right</span>
+<span class="text-on-surface font-semibold">Candidate Ingestion &amp; Cosine Evaluation</span>
+</div>
+<div class="flex items-center gap-3 text-label-mono-sm font-label-mono-sm text-on-surface-variant">
+<span>Deterministic Weighting Engine</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>Confidence: 99.4%</span>
+</div>
+</div>
+<!-- 1. TOP SECTION - DUAL INPUT / EXTRACTION SETUP -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+<!-- Left Card: Candidate Resume Source -->
+<div class="lg:col-span-6 bg-surface-container-lowest border border-outline-variant rounded-xl p-4 shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="description">description</span>
+<h2 class="text-headline-sm font-headline-sm font-bold text-on-surface">Candidate Resume Source</h2>
+</div>
+<!-- Segmented Tabs -->
+<div class="flex bg-surface-container-low p-0.5 rounded-lg border border-outline-variant">
+<button class="px-2.5 py-1 text-label-sans-bold font-label-sans-bold bg-surface-container-lowest text-primary rounded shadow-xs">PDF/DOCX Upload</button>
+<button class="px-2.5 py-1 text-label-sans-bold font-label-sans-bold text-on-surface-variant hover:text-on-surface">Raw Resume Text</button>
+</div>
+</div>
+<!-- Uploaded File Pill / Extraction Status Card -->
+<div class="p-3 bg-surface-container-low border border-outline-variant rounded-lg flex items-center justify-between mb-3">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[24px]" data-icon="picture_as_pdf">picture_as_pdf</span>
+</div>
+<div>
+<div class="text-body-md font-body-md font-semibold text-on-surface truncate max-w-xs md:max-w-md">
+                  Elena_Rostova_Staff_ML_Resume_2024.pdf <span class="text-on-surface-variant font-normal text-body-sm">(245 KB)</span>
+</div>
+<div class="flex items-center gap-1.5 text-secondary text-label-mono-sm font-label-mono-sm mt-0.5">
+<span class="material-symbols-outlined text-[16px]" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Document Structure Extracted: 4 pages, 1,280 tokens parsed</span>
+</div>
+</div>
+</div>
+<button class="p-1 text-outline hover:text-error transition-colors" title="Remove File">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm text-on-surface-variant pt-2 border-t border-outline-variant">
+<span class="text-label-mono-sm font-label-mono-sm">OCR Accuracy: 99.8% • Structured AST Generated</span>
+<button class="text-primary font-semibold hover:underline flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="visibility">visibility</span> View Tokenized PDF
+          </button>
+</div>
+</div>
+<!-- Right Card: Job Description Benchmark -->
+<div class="lg:col-span-6 bg-surface-container-lowest border border-outline-variant rounded-xl p-4 shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" data-icon="work">work</span>
+<h2 class="text-headline-sm font-headline-sm font-bold text-on-surface">Job Description Benchmark</h2>
+</div>
+<span class="px-2 py-0.5 bg-secondary-fixed text-on-secondary-fixed text-label-mono-sm font-label-mono-sm rounded border border-secondary">REQ ACTIVE</span>
+</div>
+<!-- Requisition Selector Dropdown -->
+<div class="mb-3">
+<div class="relative">
+<select class="w-full h-10 pl-3 pr-8 bg-surface-container-lowest border border-outline-variant rounded-lg text-body-md font-semibold text-on-surface focus:outline-none focus:ring-2 focus:ring-primary appearance-none cursor-pointer">
+<option selected="">REQ-8492 - Staff Machine Learning Engineer (Platform &amp; NLP)</option>
+<option>REQ-8490 - Senior Infrastructure Engineer</option>
+<option>REQ-8488 - Principal Applied Scientist (LLM Alignment)</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-2.5 pointer-events-none text-outline" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<!-- Parsed Requirements Metric Tags -->
+<div class="flex flex-wrap items-center gap-2">
+<span class="px-2.5 py-1 rounded bg-surface-container text-primary font-semibold text-label-mono-sm font-label-mono-sm border border-outline-variant flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]" data-icon="check_circle">check_circle</span>
+              14 Core Requirements
+            </span>
+<span class="px-2.5 py-1 rounded bg-surface-container-low text-on-surface-variant font-medium text-label-mono-sm font-label-mono-sm border border-outline-variant">
+              8 Preferred
+            </span>
+<span class="px-2.5 py-1 rounded bg-surface-container-low text-on-surface-variant font-medium text-label-mono-sm font-label-mono-sm border border-outline-variant">
+              6+ Yrs Exp Target
+            </span>
+<span class="px-2.5 py-1 rounded bg-secondary-container text-on-secondary-container font-medium text-label-mono-sm font-label-mono-sm">
+              Vector Space: 512-dim Normalized
+            </span>
+</div>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm text-on-surface-variant pt-2 border-t border-outline-variant">
+<span class="text-label-mono-sm font-label-mono-sm">Target Role Grade: L6 / Staff Level</span>
+<button class="text-primary font-semibold hover:underline flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="edit_note">edit_note</span> Edit Requirement Matrix
+          </button>
+</div>
+</div>
+</div>
+<!-- Execution Bar / Re-Analyze with Classical ML -->
+<div class="bg-surface-container-low border border-outline-variant rounded-xl p-3.5 flex flex-wrap items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<button class="h-10 px-4 rounded-lg bg-primary text-on-primary font-semibold text-body-md flex items-center gap-2 shadow-sm hover:bg-primary-container transition-all">
+<span class="material-symbols-outlined" data-icon="bolt">bolt</span>
+          Re-Analyze with Classical ML
+        </button>
+<div class="hidden md:flex items-center gap-2 text-label-mono-sm font-label-mono-sm text-on-surface-variant px-3 py-1.5 bg-surface-container-lowest rounded-lg border border-outline-variant">
+<span class="material-symbols-outlined text-[16px] text-primary" data-icon="tune">tune</span>
+<span>TF-IDF N-gram (1,2)</span>
+<span class="text-outline">•</span>
+<span>Cosine Similarity</span>
+<span class="text-outline">•</span>
+<span>Exact Taxonomy Match</span>
+</div>
+</div>
+<div class="flex items-center gap-3 text-body-sm font-body-sm">
+<span class="text-on-surface-variant">Inference Execution:</span>
+<span class="text-label-mono-sm font-label-mono-sm font-semibold text-secondary px-2 py-0.5 bg-surface-container-lowest rounded border border-outline-variant">24.2ms (Deterministic)</span>
+<button class="text-outline hover:text-on-surface" title="Model Configuration">
+<span class="material-symbols-outlined" data-icon="settings_suggest">settings_suggest</span>
+</button>
+</div>
+</div>
+<!-- 2. CANDIDATE OVERVIEW CARD -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-5 shadow-sm">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<!-- Candidate Identity -->
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-xl bg-primary-container text-on-primary flex items-center justify-center font-headline-lg font-bold text-2xl shadow-sm tracking-tight border-2 border-surface-container">
+            ER
+          </div>
+<div>
+<div class="flex items-center gap-2.5">
+<h1 class="text-headline-lg font-headline-lg font-bold text-on-surface">Dr. Elena Rostova</h1>
+<span class="px-2.5 py-0.5 rounded-full text-label-sans-bold font-label-sans-bold bg-secondary-fixed text-on-secondary-fixed border border-secondary">
+                VERIFIED PROFILE
+              </span>
+</div>
+<div class="text-body-md font-body-md font-medium text-primary mt-0.5">
+              Staff Machine Learning &amp; NLP Specialist
+            </div>
+<div class="flex flex-wrap items-center gap-3 text-body-sm font-body-sm text-on-surface-variant mt-1.5">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-outline" data-icon="mail">mail</span>
+                elena.rostova@analytics.io
+              </span>
+<span class="text-outline">•</span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-outline" data-icon="location_on">location_on</span>
+                San Francisco, CA
+              </span>
+<span class="text-outline">•</span>
+<span class="flex items-center gap-1 text-primary hover:underline cursor-pointer">
+<span class="material-symbols-outlined text-[16px]" data-icon="link">link</span>
+                linkedin.com/in/erostova
+              </span>
+</div>
+</div>
+</div>
+<!-- Quick Candidate Attribute Badges -->
+<div class="flex flex-wrap md:flex-col lg:flex-row items-end gap-2">
+<div class="px-3 py-1.5 rounded-lg bg-surface-container text-on-surface text-label-mono-sm font-label-mono-sm border border-outline-variant flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary" data-icon="school">school</span>
+            PhD Computer Science (Stanford)
+          </div>
+<div class="px-3 py-1.5 rounded-lg bg-surface-container text-on-surface text-label-mono-sm font-label-mono-sm border border-outline-variant flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-secondary" data-icon="history_toggle_off">history_toggle_off</span>
+            8.5 Years Relevant Exp
+          </div>
+<div class="px-3 py-1.5 rounded-lg bg-surface-container text-on-surface text-label-mono-sm font-label-mono-sm border border-outline-variant flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary-container" data-icon="hub">hub</span>
+            Classical NLP &amp; IR Focus
+          </div>
+</div>
+</div>
+</div>
+<!-- 3. OVERALL SUITABILITY SCORE CARD (EXPLAINABLE BREAKDOWN) -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-5 shadow-sm">
+<div class="flex items-center justify-between pb-3 border-b border-outline-variant mb-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="monitoring">monitoring</span>
+<h2 class="text-headline-sm font-headline-sm font-bold text-on-surface">Overall Suitability Score &amp; Explainable Breakdown</h2>
+</div>
+<div class="text-label-mono-sm font-label-mono-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-outline" data-icon="info">info</span>
+          Deterministic linear combination: S = Σ (w_i × f_i)
+        </div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+<!-- Circular Composite Metric Gauge -->
+<div class="lg:col-span-3 flex flex-col items-center justify-center p-4 bg-surface-container-low rounded-xl border border-outline-variant text-center">
+<div class="relative w-36 h-36 flex items-center justify-center">
+<!-- SVG Progress Ring -->
+<svg class="w-full h-full -rotate-90 transform" viewbox="0 0 100 100">
+<circle class="text-outline-variant" cx="50" cy="50" fill="transparent" r="42" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-primary-container" cx="50" cy="50" fill="transparent" r="42" stroke="currentColor" stroke-dasharray="264" stroke-dashoffset="31.68" stroke-linecap="round" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-headline-xl font-headline-xl font-bold text-on-surface tracking-tight leading-none">88</span>
+<span class="text-label-mono-sm font-label-mono-sm text-on-surface-variant">/ 100</span>
+</div>
+</div>
+<div class="mt-3">
+<span class="px-3 py-1 rounded-full text-label-sans-bold font-label-sans-bold bg-secondary-fixed text-on-secondary-fixed border border-secondary uppercase">
+              Strong Recommended Match
+            </span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-2">
+            Top 4th percentile of all applicant vectors for REQ-8492.
+          </p>
+</div>
+<!-- Factor Breakdown Meters -->
+<div class="lg:col-span-9 space-y-3.5">
+<!-- Factor 1: Skill Matching -->
+<div>
+<div class="flex items-center justify-between text-body-sm font-body-sm mb-1">
+<div class="flex items-center gap-2">
+<span class="font-semibold text-on-surface">Skill Matching Score</span>
+<span class="text-label-mono-sm font-label-mono-sm text-outline px-1.5 py-0.2 rounded bg-surface-container">Weight: 35%</span>
+</div>
+<span class="text-label-mono-md font-label-mono-md font-semibold text-primary">92%</span>
+</div>
+<div class="w-full h-2.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary-container rounded-full" style="width: 92%;"></div>
+</div>
+</div>
+<!-- Factor 2: Cosine Similarity -->
+<div>
+<div class="flex items-center justify-between text-body-sm font-body-sm mb-1">
+<div class="flex items-center gap-2">
+<span class="font-semibold text-on-surface">Resume-JD Cosine Similarity</span>
+<span class="text-label-mono-sm font-label-mono-sm text-outline px-1.5 py-0.2 rounded bg-surface-container">Weight: 25%</span>
+</div>
+<span class="text-label-mono-md font-label-mono-md font-semibold text-secondary">86%</span>
+</div>
+<div class="w-full h-2.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary rounded-full" style="width: 86%;"></div>
+</div>
+</div>
+<!-- Factor 3: Experience Qualification -->
+<div>
+<div class="flex items-center justify-between text-body-sm font-body-sm mb-1">
+<div class="flex items-center gap-2">
+<span class="font-semibold text-on-surface">Experience Qualification Score</span>
+<span class="text-label-mono-sm font-label-mono-sm text-outline px-1.5 py-0.2 rounded bg-surface-container">Weight: 20%</span>
+</div>
+<span class="text-label-mono-md font-label-mono-md font-semibold text-primary">94%</span>
+</div>
+<div class="w-full h-2.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary-container rounded-full" style="width: 94%;"></div>
+</div>
+</div>
+<!-- Factor 4: Education Alignment -->
+<div>
+<div class="flex items-center justify-between text-body-sm font-body-sm mb-1">
+<div class="flex items-center gap-2">
+<span class="font-semibold text-on-surface">Education Alignment Score</span>
+<span class="text-label-mono-sm font-label-mono-sm text-outline px-1.5 py-0.2 rounded bg-surface-container">Weight: 10%</span>
+</div>
+<span class="text-label-mono-md font-label-mono-md font-semibold text-secondary">100%</span>
+</div>
+<div class="w-full h-2.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary rounded-full" style="width: 100%;"></div>
+</div>
+</div>
+<!-- Factor 5: Project Domain Relevance -->
+<div>
+<div class="flex items-center justify-between text-body-sm font-body-sm mb-1">
+<div class="flex items-center gap-2">
+<span class="font-semibold text-on-surface">Project Domain Relevance</span>
+<span class="text-label-mono-sm font-label-mono-sm text-outline px-1.5 py-0.2 rounded bg-surface-container">Weight: 10%</span>
+</div>
+<span class="text-label-mono-md font-label-mono-md font-semibold text-primary">82%</span>
+</div>
+<div class="w-full h-2.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary-container rounded-full" style="width: 82%;"></div>
+</div>
+</div>
+<div class="pt-2 text-label-mono-sm font-label-mono-sm text-on-surface-variant flex items-center justify-between">
+<span>Formula: Scores computed using deterministic weighted linear sum of normalized feature vectors.</span>
+<span class="text-primary cursor-pointer hover:underline">Adjust Model Feature Weights</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 4. DETAILED TWO-COLUMN ANALYSIS -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- LEFT COLUMN: SKILLS TAXONOMY MATCH MATRIX -->
+<div class="lg:col-span-6 bg-surface-container-lowest border border-outline-variant rounded-xl p-5 shadow-sm space-y-5">
+<div class="flex items-center justify-between border-b border-outline-variant pb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="schema">schema</span>
+<h2 class="text-headline-sm font-headline-sm font-bold text-on-surface">Skills Taxonomy Match Matrix</h2>
+</div>
+<span class="text-label-mono-sm font-label-mono-sm px-2 py-0.5 bg-surface-container rounded text-on-surface-variant">Taxonomy v4.11</span>
+</div>
+<!-- Coverage Progress Bar -->
+<div class="p-3.5 bg-surface-container-low border border-outline-variant rounded-lg">
+<div class="flex items-center justify-between mb-1.5">
+<span class="text-body-sm font-body-sm font-semibold text-on-surface">Mandatory JD Requirements Coverage</span>
+<span class="text-label-mono-md font-label-mono-md font-bold text-secondary">82% (11 of 14)</span>
+</div>
+<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary rounded-full" style="width: 82%;"></div>
+</div>
+<div class="flex justify-between items-center text-label-mono-sm font-label-mono-sm text-on-surface-variant mt-2">
+<span>Threshold for Interview: 75%</span>
+<span class="text-secondary font-medium">Surpasses Cutoff (+7%)</span>
+</div>
+</div>
+<!-- Group 1: Matched Skills -->
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="text-label-sans-bold font-label-sans-bold text-on-surface-variant uppercase flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+              Exact &amp; Semantic Matched Skills (8 verified)
+            </span>
+<span class="text-label-mono-sm font-label-mono-sm text-outline">Frequency In Corpus</span>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="px-2.5 py-1 rounded bg-secondary-fixed text-on-secondary-fixed text-label-mono-sm font-label-mono-sm border border-secondary flex items-center gap-1">
+              Python <strong class="ml-1 px-1 bg-surface-container-lowest rounded text-secondary">x14</strong>
+</span>
+<span class="px-2.5 py-1 rounded bg-secondary-fixed text-on-secondary-fixed text-label-mono-sm font-label-mono-sm border border-secondary flex items-center gap-1">
+              Scikit-Learn <strong class="ml-1 px-1 bg-surface-container-lowest rounded text-secondary">x8</strong>
+</span>
+<span class="px-2.5 py-1 rounded bg-secondary-fixed text-on-secondary-fixed text-label-mono-sm font-label-mono-sm border border-secondary flex items-center gap-1">
+              TF-IDF <strong class="ml-1 px-1 bg-surface-container-lowest rounded text-secondary">x6</strong>
+</span>
+<span class="px-2.5 py-1 rounded bg-secondary-fixed text-on-secondary-fixed text-label-mono-sm font-label-mono-sm border border-secondary flex items-center gap-1">
+              NLP Preprocessing <strong class="ml-1 px-1 bg-surface-container-lowest rounded text-secondary">x9</strong>
+</span>
+<span class="px-2.5 py-1 rounded bg-secondary-fixed text-on-secondary-fixed text-label-mono-sm font-label-mono-sm border border-secondary flex items-center gap-1">
+              Pandas <strong class="ml-1 px-1 bg-surface-container-lowest rounded text-secondary">x11</strong>
+</span>
+<span class="px-2.5 py-1 rounded bg-secondary-fixed text-on-secondary-fixed text-label-mono-sm font-label-mono-sm border border-secondary flex items-center gap-1">
+              Feature Engineering <strong class="ml-1 px-1 bg-surface-container-lowest rounded text-secondary">x5</strong>
+</span>
+<span class="px-2.5 py-1 rounded bg-secondary-fixed text-on-secondary-fixed text-label-mono-sm font-label-mono-sm border border-secondary flex items-center gap-1">
+              PyTorch <strong class="ml-1 px-1 bg-surface-container-lowest rounded text-secondary">x4</strong>
+</span>
+<span class="px-2.5 py-1 rounded bg-secondary-fixed text-on-secondary-fixed text-label-mono-sm font-label-mono-sm border border-secondary flex items-center gap-1">
+              SQL <strong class="ml-1 px-1 bg-surface-container-lowest rounded text-secondary">x7</strong>
+</span>
+</div>
+</div>
+<!-- Group 2: Missing Required Skills -->
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="text-label-sans-bold font-label-sans-bold text-error uppercase flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+              Missing Required Skills &amp; Penalties (2 flags)
+            </span>
+<span class="text-label-mono-sm font-label-mono-sm text-error">Impact Score</span>
+</div>
+<div class="space-y-2">
+<div class="p-2.5 bg-error-container text-on-error-container rounded-lg border border-error flex items-start justify-between">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[18px] text-error mt-0.5" data-icon="warning">warning</span>
+<div>
+<div class="text-body-sm font-body-sm font-semibold">Spark / Distributed ML</div>
+<div class="text-label-mono-sm font-label-mono-sm text-on-surface-variant">Required: 3+ yrs enterprise data processing. Zero occurrences found in candidate corpus.</div>
+</div>
+</div>
+<span class="text-label-mono-sm font-label-mono-sm font-bold text-error bg-surface-container-lowest px-1.5 py-0.5 rounded">-8.0%</span>
+</div>
+<div class="p-2.5 bg-surface-container-low text-on-surface rounded-lg border border-outline-variant flex items-start justify-between">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[18px] text-outline mt-0.5" data-icon="info">info</span>
+<div>
+<div class="text-body-sm font-body-sm font-semibold">Kubernetes / Container Orchestration</div>
+<div class="text-label-mono-sm font-label-mono-sm text-on-surface-variant">Found in secondary research projects only. Not present in recent production roles.</div>
+</div>
+</div>
+<span class="text-label-mono-sm font-label-mono-sm font-semibold text-outline bg-surface-container-lowest px-1.5 py-0.5 rounded">-2.5%</span>
+</div>
+</div>
+</div>
+<!-- Group 3: Additional Valued Skills -->
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="text-label-sans-bold font-label-sans-bold text-secondary uppercase flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+              Additional Bonus Skills Found (Unprompted)
+            </span>
+<span class="text-label-mono-sm font-label-mono-sm text-secondary">+3.5% Bonus Value</span>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="px-2.5 py-1 rounded bg-secondary-container text-on-secondary-container text-label-mono-sm font-label-mono-sm font-medium">
+              Graph Theory
+            </span>
+<span class="px-2.5 py-1 rounded bg-secondary-container text-on-secondary-container text-label-mono-sm font-label-mono-sm font-medium">
+              MLflow
+            </span>
+<span class="px-2.5 py-1 rounded bg-secondary-container text-on-secondary-container text-label-mono-sm font-label-mono-sm font-medium">
+              Docker
+            </span>
+<span class="px-2.5 py-1 rounded bg-secondary-container text-on-secondary-container text-label-mono-sm font-label-mono-sm font-medium">
+              CI/CD Pipeline
+            </span>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: DETAILED FACTOR ANALYSIS & EXPLAINABILITY -->
+<div class="lg:col-span-6 bg-surface-container-lowest border border-outline-variant rounded-xl p-5 shadow-sm space-y-5">
+<div class="flex items-center justify-between border-b border-outline-variant pb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="psychology">psychology</span>
+<h2 class="text-headline-sm font-headline-sm font-bold text-on-surface">Detailed Factor Analysis &amp; Explainability</h2>
+</div>
+<button class="text-label-mono-sm font-label-mono-sm text-primary hover:underline flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="download">download</span> Audit Log
+          </button>
+</div>
+<!-- Item 1: Experience Match -->
+<div class="p-3.5 bg-surface-container-low border border-outline-variant rounded-lg">
+<div class="flex items-center justify-between mb-1">
+<span class="text-body-sm font-body-sm font-semibold text-on-surface flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary text-[18px]" data-icon="verified">verified</span>
+              Experience Tenure Match
+            </span>
+<span class="text-label-mono-sm font-label-mono-sm font-semibold text-secondary bg-surface-container-lowest px-2 py-0.5 rounded border border-outline-variant">
+              100% Satisfied
+            </span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface">
+<strong>8.5 yrs verified</strong> vs <strong>6.0 yrs required</strong> in job spec (+2.5 yrs delta). Progressive senior titles across 2 tier-1 tech firms.
+          </p>
+</div>
+<!-- Item 2: Education Validation -->
+<div class="p-3.5 bg-surface-container-low border border-outline-variant rounded-lg">
+<div class="flex items-center justify-between mb-1">
+<span class="text-body-sm font-body-sm font-semibold text-on-surface flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary text-[18px]" data-icon="verified">verified</span>
+              Education &amp; Degree Validation
+            </span>
+<span class="text-label-mono-sm font-label-mono-sm font-semibold text-secondary bg-surface-container-lowest px-2 py-0.5 rounded border border-outline-variant">
+              Exceeds Criteria
+            </span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface">
+            Candidate holds <strong>PhD in Computer Science (Stanford)</strong> with thesis on deterministic graph traversal. Matches and exceeds the baseline requirement for MSc.
+          </p>
+</div>
+<!-- Item 3: Identified Gaps & Human Review Recommendations -->
+<div class="p-3.5 bg-surface-container-low border border-outline-variant rounded-lg">
+<div class="flex items-center gap-1.5 text-on-surface font-semibold text-body-sm font-body-sm mb-1">
+<span class="material-symbols-outlined text-primary text-[18px]" data-icon="assignment_late">assignment_late</span>
+            Identified Gaps &amp; Human Review Recommendations
+          </div>
+<div class="p-2.5 bg-surface-container-lowest border border-outline-variant rounded text-body-sm font-body-sm text-on-surface-variant space-y-1.5 mt-2">
+<p>
+<strong class="text-on-surface">Notice:</strong> Lack of explicit Apache Spark enterprise deployments in last 2 roles (primarily single-node Pandas &amp; custom C++ bindings).
+            </p>
+<div class="flex items-center gap-2 text-label-mono-sm font-label-mono-sm text-primary">
+<span class="material-symbols-outlined text-[16px]" data-icon="arrow_right_alt">arrow_right_alt</span>
+              Recommendation: Verify distributed computing competency during technical screen.
+            </div>
+</div>
+</div>
+<!-- Item 4: Heatmap / Vector Feature Summary -->
+<div class="p-3.5 bg-surface-container-low border border-outline-variant rounded-lg">
+<div class="flex items-center justify-between mb-2">
+<span class="text-label-sans-bold font-label-sans-bold text-on-surface-variant uppercase">
+              Verifiable Keyword Density &amp; Cosine Similarity Heatmap
+            </span>
+<span class="text-label-mono-sm font-label-mono-sm text-outline">512 Vector Coordinates</span>
+</div>
+<!-- Mini Heatmap visualization bar -->
+<div class="grid grid-cols-12 gap-1 h-6">
+<div class="bg-primary rounded-xs" title="NLP Tokens (0.94)"></div>
+<div class="bg-primary-container rounded-xs" title="Scikit-Learn (0.91)"></div>
+<div class="bg-primary-container rounded-xs" title="Python (0.89)"></div>
+<div class="bg-primary-container rounded-xs" title="Information Retrieval (0.87)"></div>
+<div class="bg-surface-tint rounded-xs" title="Mathematical Optimization (0.84)"></div>
+<div class="bg-surface-tint rounded-xs" title="Vector Spaces (0.82)"></div>
+<div class="bg-secondary rounded-xs" title="Feature Stores (0.78)"></div>
+<div class="bg-secondary-container rounded-xs" title="CI/CD (0.71)"></div>
+<div class="bg-surface-variant rounded-xs" title="Kubernetes (0.54)"></div>
+<div class="bg-surface-variant rounded-xs" title="Cloud Infra (0.49)"></div>
+<div class="bg-error-container rounded-xs" title="Spark Cluster (0.12)"></div>
+<div class="bg-error-container rounded-xs" title="Distributed Hadoop (0.08)"></div>
+</div>
+<div class="flex justify-between items-center text-label-mono-sm font-label-mono-sm text-on-surface-variant mt-2">
+<span>High Density Cluster (NLP/ML)</span>
+<span class="text-error font-medium">Sparse Cluster (Big Data Infra)</span>
+</div>
+</div>
+<!-- Sticky Action Trigger -->
+<div class="pt-2 flex items-center justify-end gap-3">
+<button class="h-9 px-4 rounded-lg bg-surface-container-lowest border border-outline-variant text-on-surface hover:bg-surface-container-low text-body-sm font-semibold transition-colors">
+            Reject Candidate
+          </button>
+<button class="h-9 px-4 rounded-lg bg-primary text-on-primary font-semibold text-body-sm hover:bg-primary-container flex items-center gap-1.5 shadow-sm transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="send">send</span>
+            Advance to Technical Screen
+          </button>
+</div>
+</div>
+</div>
+</main>
+</body></html>

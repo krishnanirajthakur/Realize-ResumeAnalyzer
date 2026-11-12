@@ -1,0 +1,354 @@
+{
+  "skills": [
+    {
+      "name": "Python",
+      "category": "Programming Languages",
+      "aliases": ["py", "python3", "python2"]
+    },
+    {
+      "name": "Java",
+      "category": "Programming Languages",
+      "aliases": ["core java", "java 8", "java 11", "java 17", "java 21"]
+    },
+    {
+      "name": "JavaScript",
+      "category": "Programming Languages",
+      "aliases": ["js", "ecmascript", "es6", "vanilla js"]
+    },
+    {
+      "name": "TypeScript",
+      "category": "Programming Languages",
+      "aliases": ["ts"]
+    },
+    {
+      "name": "C++",
+      "category": "Programming Languages",
+      "aliases": ["cpp", "cplusplus", "c/c++"]
+    },
+    {
+      "name": "C#",
+      "category": "Programming Languages",
+      "aliases": ["csharp", "c-sharp", ".net c#"]
+    },
+    {
+      "name": "C",
+      "category": "Programming Languages",
+      "aliases": ["ansi c", "c programming"]
+    },
+    {
+      "name": "Go",
+      "category": "Programming Languages",
+      "aliases": ["golang"]
+    },
+    {
+      "name": "Rust",
+      "category": "Programming Languages",
+      "aliases": ["rust-lang"]
+    },
+    {
+      "name": "R",
+      "category": "Programming Languages",
+      "aliases": ["r programming", "r-lang"]
+    },
+    {
+      "name": "SQL",
+      "category": "Programming Languages",
+      "aliases": ["structured query language", "t-sql", "pl/sql"]
+    },
+    {
+      "name": "PHP",
+      "category": "Programming Languages",
+      "aliases": ["php7", "php8"]
+    },
+    {
+      "name": "Ruby",
+      "category": "Programming Languages",
+      "aliases": ["ruby-lang"]
+    },
+    {
+      "name": "Kotlin",
+      "category": "Programming Languages",
+      "aliases": []
+    },
+    {
+      "name": "Swift",
+      "category": "Programming Languages",
+      "aliases": ["swiftui"]
+    },
+    {
+      "name": "Scala",
+      "category": "Programming Languages",
+      "aliases": []
+    },
+    {
+      "name": "HTML5",
+      "category": "Web & Frontend",
+      "aliases": ["html", "html/css"]
+    },
+    {
+      "name": "CSS3",
+      "category": "Web & Frontend",
+      "aliases": ["css", "scss", "sass", "less"]
+    },
+    {
+      "name": "React",
+      "category": "Web & Frontend",
+      "aliases": ["reactjs", "react.js", "react native"]
+    },
+    {
+      "name": "Next.js",
+      "category": "Web & Frontend",
+      "aliases": ["nextjs", "next"]
+    },
+    {
+      "name": "Angular",
+      "category": "Web & Frontend",
+      "aliases": ["angularjs", "angular 2+"]
+    },
+    {
+      "name": "Vue.js",
+      "category": "Web & Frontend",
+      "aliases": ["vue", "vuejs", "vue 3"]
+    },
+    {
+      "name": "Tailwind CSS",
+      "category": "Web & Frontend",
+      "aliases": ["tailwind", "tailwindcss"]
+    },
+    {
+      "name": "Bootstrap",
+      "category": "Web & Frontend",
+      "aliases": ["bootstrap 5", "twitter bootstrap"]
+    },
+    {
+      "name": "Django",
+      "category": "Backend Frameworks",
+      "aliases": ["django rest framework", "drf"]
+    },
+    {
+      "name": "Flask",
+      "category": "Backend Frameworks",
+      "aliases": []
+    },
+    {
+      "name": "FastAPI",
+      "category": "Backend Frameworks",
+      "aliases": ["fast api"]
+    },
+    {
+      "name": "Node.js",
+      "category": "Backend Frameworks",
+      "aliases": ["nodejs", "node"]
+    },
+    {
+      "name": "Express.js",
+      "category": "Backend Frameworks",
+      "aliases": ["express", "expressjs"]
+    },
+    {
+      "name": "Spring Boot",
+      "category": "Backend Frameworks",
+      "aliases": ["spring", "spring framework", "spring-boot"]
+    },
+    {
+      "name": ".NET Core",
+      "category": "Backend Frameworks",
+      "aliases": [".net", "asp.net", "asp.net core", "dotnet"]
+    },
+    {
+      "name": "Ruby on Rails",
+      "category": "Backend Frameworks",
+      "aliases": ["rails"]
+    },
+    {
+      "name": "GraphQL",
+      "category": "Backend Frameworks",
+      "aliases": ["apollo graphql"]
+    },
+    {
+      "name": "REST API",
+      "category": "Backend Frameworks",
+      "aliases": ["restful api", "rest", "rest apis"]
+    },
+    {
+      "name": "PostgreSQL",
+      "category": "Databases & Storage",
+      "aliases": ["postgres", "psql", "postgresql database"]
+    },
+    {
+      "name": "MySQL",
+      "category": "Databases & Storage",
+      "aliases": ["my-sql"]
+    },
+    {
+      "name": "MongoDB",
+      "category": "Databases & Storage",
+      "aliases": ["mongo", "nosql mongodb"]
+    },
+    {
+      "name": "Redis",
+      "category": "Databases & Storage",
+      "aliases": ["redis cache"]
+    },
+    {
+      "name": "SQLite",
+      "category": "Databases & Storage",
+      "aliases": ["sqlite3"]
+    },
+    {
+      "name": "Oracle DB",
+      "category": "Databases & Storage",
+      "aliases": ["oracle database", "oracle sql"]
+    },
+    {
+      "name": "Cassandra",
+      "category": "Databases & Storage",
+      "aliases": ["apache cassandra"]
+    },
+    {
+      "name": "Elasticsearch",
+      "category": "Databases & Storage",
+      "aliases": ["elastic search", "elk"]
+    },
+    {
+      "name": "Amazon Web Services (AWS)",
+      "category": "Cloud & Infrastructure",
+      "aliases": ["aws", "amazon web services", "ec2", "s3", "lambda", "aws cloud"]
+    },
+    {
+      "name": "Microsoft Azure",
+      "category": "Cloud & Infrastructure",
+      "aliases": ["azure", "azure cloud", "azure devops"]
+    },
+    {
+      "name": "Google Cloud Platform (GCP)",
+      "category": "Cloud & Infrastructure",
+      "aliases": ["gcp", "google cloud", "bigquery"]
+    },
+    {
+      "name": "Docker",
+      "category": "DevOps & Containers",
+      "aliases": ["docker compose", "containerization"]
+    },
+    {
+      "name": "Kubernetes",
+      "category": "DevOps & Containers",
+      "aliases": ["k8s", "k8", "kube"]
+    },
+    {
+      "name": "Terraform",
+      "category": "DevOps & Containers",
+      "aliases": ["tf", "infrastructure as code", "iac"]
+    },
+    {
+      "name": "CI/CD",
+      "category": "DevOps & Containers",
+      "aliases": ["continuous integration", "continuous deployment", "github actions", "gitlab ci", "jenkins"]
+    },
+    {
+      "name": "Ansible",
+      "category": "DevOps & Containers",
+      "aliases": []
+    },
+    {
+      "name": "Linux",
+      "category": "Operating Systems & Platforms",
+      "aliases": ["ubuntu", "debian", "centos", "redhat", "unix", "bash", "shell scripting"]
+    },
+    {
+      "name": "Git",
+      "category": "Developer Tools",
+      "aliases": ["github", "gitlab", "bitbucket", "version control"]
+    },
+    {
+      "name": "Jira",
+      "category": "Developer Tools",
+      "aliases": ["confluence", "atlassian"]
+    },
+    {
+      "name": "Scikit-Learn",
+      "category": "Data Science & Classical ML",
+      "aliases": ["sklearn", "scikit learn"]
+    },
+    {
+      "name": "Pandas",
+      "category": "Data Science & Classical ML",
+      "aliases": []
+    },
+    {
+      "name": "NumPy",
+      "category": "Data Science & Classical ML",
+      "aliases": ["numpy array"]
+    },
+    {
+      "name": "SciPy",
+      "category": "Data Science & Classical ML",
+      "aliases": []
+    },
+    {
+      "name": "NLTK",
+      "category": "Data Science & Classical ML",
+      "aliases": ["natural language toolkit", "nltk nlp"]
+    },
+    {
+      "name": "Spacy",
+      "category": "Data Science & Classical ML",
+      "aliases": []
+    },
+    {
+      "name": "Matplotlib",
+      "category": "Data Science & Classical ML",
+      "aliases": ["seaborn", "data visualization"]
+    },
+    {
+      "name": "Plotly",
+      "category": "Data Science & Classical ML",
+      "aliases": ["plotly express", "dash"]
+    },
+    {
+      "name": "Machine Learning",
+      "category": "Data Science & Classical ML",
+      "aliases": ["ml", "classical ml", "supervised learning", "unsupervised learning", "classification", "regression", "clustering", "random forest", "xgboost", "logistic regression", "support vector machines", "svm"]
+    },
+    {
+      "name": "Natural Language Processing (NLP)",
+      "category": "Data Science & Classical ML",
+      "aliases": ["nlp", "text processing", "tokenization", "tf-idf", "tfidf", "cosine similarity", "information retrieval"]
+    },
+    {
+      "name": "Apache Spark",
+      "category": "Big Data Engineering",
+      "aliases": ["spark", "pyspark", "spark streaming"]
+    },
+    {
+      "name": "Apache Kafka",
+      "category": "Big Data Engineering",
+      "aliases": ["kafka", "event streaming"]
+    },
+    {
+      "name": "Airflow",
+      "category": "Big Data Engineering",
+      "aliases": ["apache airflow", "data pipelines", "etl"]
+    },
+    {
+      "name": "Tableau",
+      "category": "Business Intelligence & Analytics",
+      "aliases": ["power bi", "powerbi", "looker", "bi tools", "data dashboards"]
+    },
+    {
+      "name": "Agile / Scrum",
+      "category": "Methodologies",
+      "aliases": ["agile", "scrum", "kanban", "sprint planning"]
+    },
+    {
+      "name": "Microservices",
+      "category": "Architecture & Engineering",
+      "aliases": ["microservice architecture", "distributed systems", "event-driven architecture"]
+    },
+    {
+      "name": "Unit Testing",
+      "category": "Testing & QA",
+      "aliases": ["pytest", "junit", "test driven development", "tdd", "integration testing"]
+    }
+  ]
+}

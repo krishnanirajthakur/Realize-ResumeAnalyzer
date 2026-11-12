@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ResumeIQ - Bulk Screening &amp; Cohort Evaluation</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-dim": "#d2d9f4",
+            "primary-fixed-dim": "#c3c0ff",
+            "on-tertiary": "#ffffff",
+            "secondary": "#006a61",
+            "primary": "#3525cd",
+            "surface-tint": "#4d44e3",
+            "tertiary-fixed": "#e1e0ff",
+            "on-tertiary-fixed": "#07006c",
+            "on-surface": "#131b2e",
+            "outline": "#777587",
+            "surface-container-lowest": "#ffffff",
+            "inverse-primary": "#c3c0ff",
+            "on-primary": "#ffffff",
+            "tertiary": "#3130c0",
+            "inverse-surface": "#283044",
+            "on-secondary-fixed": "#00201d",
+            "error-container": "#ffdad6",
+            "outline-variant": "#c7c4d8",
+            "secondary-container": "#86f2e4",
+            "surface-variant": "#dae2fd",
+            "on-surface-variant": "#464555",
+            "background": "#faf8ff",
+            "inverse-on-surface": "#eef0ff",
+            "tertiary-fixed-dim": "#c0c1ff",
+            "on-primary-container": "#dad7ff",
+            "tertiary-container": "#4b4dd8",
+            "surface-container-highest": "#dae2fd",
+            "secondary-fixed-dim": "#6bd8cb",
+            "on-secondary-container": "#006f66",
+            "on-tertiary-fixed-variant": "#2f2ebe",
+            "on-primary-fixed": "#0f0069",
+            "secondary-fixed": "#89f5e7",
+            "on-error-container": "#93000a",
+            "on-primary-fixed-variant": "#3323cc",
+            "surface-container": "#eaedff",
+            "on-error": "#ffffff",
+            "error": "#ba1a1a",
+            "primary-container": "#4f46e5",
+            "on-secondary-fixed-variant": "#005049",
+            "primary-fixed": "#e2dfff",
+            "surface-container-low": "#f2f3ff",
+            "on-background": "#131b2e",
+            "on-secondary": "#ffffff",
+            "surface-bright": "#faf8ff",
+            "on-tertiary-container": "#d9d8ff",
+            "surface-container-high": "#e2e7ff",
+            "surface": "#faf8ff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-xl": "1.5rem",
+            "space-sm": "0.5rem",
+            "margin": "1.5rem",
+            "space-2xl": "2rem",
+            "space-xs": "0.25rem",
+            "space-2xs": "0.125rem",
+            "margin-mobile": "1rem",
+            "space-lg": "1rem",
+            "gutter-lg": "1.5rem",
+            "space-md": "0.75rem",
+            "gutter": "1rem"
+          },
+          "fontFamily": {
+            "body-md": ["Inter"],
+            "label-mono-md": ["JetBrains Mono"],
+            "headline-sm": ["Inter"],
+            "label-sans-bold": ["Inter"],
+            "headline-xl": ["Inter"],
+            "body-sm": ["Inter"],
+            "headline-lg": ["Inter"],
+            "label-mono-sm": ["JetBrains Mono"],
+            "headline-lg-mobile": ["Inter"],
+            "headline-md": ["Inter"],
+            "body-lg": ["Inter"]
+          },
+          "fontSize": {
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "label-mono-md": ["13px", { "lineHeight": "18px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "headline-sm": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "label-sans-bold": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }],
+            "headline-xl": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.025em", "fontWeight": "700" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "label-mono-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+            "headline-lg-mobile": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased min-h-screen flex flex-col">
+<!-- ========================================================================= -->
+<!-- 1. LEFT SIDE NAV (Shared Component: SideNavBar)                            -->
+<!-- ========================================================================= -->
+<aside class="fixed left-0 top-0 bottom-0 z-40 w-64 bg-surface-container-lowest border-r border-outline-variant flex flex-col justify-between">
+<!-- Top Branding & Nav List -->
+<div class="flex flex-col">
+<!-- Brand Header -->
+<div class="p-space-lg flex items-center justify-between border-b border-outline-variant">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-lg" data-icon="batch_prediction">batch_prediction</span>
+</div>
+<div>
+<h1 class="text-headline-md font-headline-md font-bold tracking-tight text-on-surface">ResumeIQ</h1>
+<p class="text-label-mono-sm font-label-mono-sm text-on-surface-variant">Talent Intelligence Suite</p>
+</div>
+</div>
+</div>
+<!-- Navigation Tabs -->
+<nav class="p-space-sm space-y-1">
+<!-- 1: Dashboard -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface font-medium hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="space_dashboard">space_dashboard</span>
+<span class="text-body-md font-body-md">Dashboard</span>
+</a>
+<!-- 2: Resume Analysis -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface font-medium hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="analytics">analytics</span>
+<span class="text-body-md font-body-md">Resume Analysis</span>
+</a>
+<!-- 3: Bulk Screening (ACTIVE) -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-surface-container text-primary font-semibold border-l-2 border-primary" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="batch_prediction">batch_prediction</span>
+<span class="text-body-md font-body-md">Bulk Screening</span>
+</a>
+<!-- 4: Candidate Comparison -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface font-medium hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="compare_arrows">compare_arrows</span>
+<span class="text-body-md font-body-md">Candidate Comparison</span>
+</a>
+<!-- 5: Skills Analytics -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface font-medium hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="psychology">psychology</span>
+<span class="text-body-md font-body-md">Skills Analytics</span>
+</a>
+<!-- 6: Evaluation Reports -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface font-medium hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="assessment">assessment</span>
+<span class="text-body-md font-body-md">Evaluation Reports</span>
+</a>
+<!-- 7: Dataset & Model Evaluation -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface font-medium hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="tune">tune</span>
+<span class="text-body-md font-body-md">Dataset &amp; Model Evaluation</span>
+</a>
+<!-- 8: Settings -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface font-medium hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="settings">settings</span>
+<span class="text-body-md font-body-md">Settings</span>
+</a>
+</nav>
+</div>
+<!-- Bottom Actions & System Health -->
+<div class="p-space-sm border-t border-outline-variant space-y-1">
+<button class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low text-body-sm font-body-sm transition-colors mb-2">
+<span class="flex items-center gap-2">
+<span class="material-symbols-outlined text-base" data-icon="swap_horiz">swap_horiz</span>
+<span>Switch Workspace</span>
+</span>
+<span class="text-label-mono-sm font-label-mono-sm text-outline">NYC-HQ</span>
+</button>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low text-body-sm font-body-sm transition-colors" href="#">
+<span class="material-symbols-outlined text-base text-secondary" data-icon="memory">memory</span>
+<span>System Health</span>
+<span class="ml-auto w-2 h-2 rounded-full bg-secondary"></span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low text-body-sm font-body-sm transition-colors" href="#">
+<span class="material-symbols-outlined text-base" data-icon="help_outline">help_outline</span>
+<span>Help &amp; Docs</span>
+</a>
+</div>
+</aside>
+<!-- ========================================================================= -->
+<!-- 2. TOP NAVBAR (Shared Component: TopNavBar)                               -->
+<!-- ========================================================================= -->
+<header class="sticky top-0 z-30 w-full pl-64 h-16 bg-surface-container-lowest border-b border-outline-variant flex items-center justify-between px-6">
+<!-- Left Target Context Selector -->
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-outline-variant bg-surface-bright text-on-surface">
+<span class="material-symbols-outlined text-base text-primary" data-icon="business_center">business_center</span>
+<span class="text-body-sm font-body-sm font-medium">Senior Machine Learning Engineer (REQ-8492)</span>
+<span class="material-symbols-outlined text-base text-on-surface-variant ml-1 cursor-pointer" data-icon="arrow_drop_down">arrow_drop_down</span>
+</div>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-label-mono-sm font-label-mono-sm bg-surface-container-high text-primary">
+        NLP &amp; Vector Infrastructure
+      </span>
+</div>
+<!-- Right Actions Cluster -->
+<div class="flex items-center gap-3">
+<!-- Export Screening Results -->
+<button class="h-9 px-3.5 flex items-center gap-2 rounded-lg border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low text-on-surface text-body-sm font-body-sm font-medium transition-colors shadow-sm">
+<span class="material-symbols-outlined text-base" data-icon="download">download</span>
+<span>Export Screening Results (CSV)</span>
+</button>
+<!-- Upload Batch Resumes -->
+<button class="h-9 px-3.5 flex items-center gap-2 rounded-lg bg-primary hover:bg-primary-container text-on-primary text-body-sm font-body-sm font-semibold transition-colors shadow-sm">
+<span class="material-symbols-outlined text-base" data-icon="upload_file">upload_file</span>
+<span>Upload Batch Resumes (Zip / Multi-file)</span>
+</button>
+<div class="h-5 w-px bg-outline-variant mx-1"></div>
+<!-- Trailing Icon Actions -->
+<button class="p-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" title="Tune Algorithmic Weights">
+<span class="material-symbols-outlined text-xl" data-icon="tune">tune</span>
+</button>
+<button class="p-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors relative" title="Notifications">
+<span class="material-symbols-outlined text-xl" data-icon="notifications">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-primary"></span>
+</button>
+<!-- User Avatar -->
+<div class="flex items-center gap-2 pl-2">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest border border-outline flex items-center justify-center overflow-hidden">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="account_circle">account_circle</span>
+</div>
+</div>
+</div>
+</header>
+<!-- ========================================================================= -->
+<!-- 3. MAIN ANALYTICS CANVAS                                                  -->
+<!-- ========================================================================= -->
+<main class="pl-64 flex-1 p-6 pb-28 space-y-6">
+<!-- Top Summary & Telemetry Header -->
+<div class="flex flex-col lg:flex-row gap-4 items-stretch justify-between">
+<!-- Batch Processing Status Card -->
+<div class="flex-1 bg-surface-container-lowest border border-outline-variant rounded-lg p-space-md shadow-sm flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded bg-secondary/10 text-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-lg" data-icon="check_circle">check_circle</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h2 class="text-headline-sm font-headline-sm text-on-surface font-semibold">Batch #B-2024-08 (48 Resumes Processed)</h2>
+<span class="text-label-mono-sm font-label-mono-sm px-2 py-0.5 rounded bg-secondary/10 text-secondary border border-secondary/20">Vectorized</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Processing time: 4.2s via local vectorized TF-IDF pipeline</p>
+</div>
+</div>
+<span class="text-label-mono-sm font-label-mono-sm font-semibold text-secondary">100% COMPLETE</span>
+</div>
+<div class="mt-3">
+<div class="w-full bg-surface-container-high rounded-full h-1.5 overflow-hidden">
+<div class="bg-secondary h-1.5 rounded-full transition-all duration-500" style="width: 100%"></div>
+</div>
+</div>
+</div>
+<!-- Quick Distribution Summary Cards -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3 min-w-[420px]">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-3">
+<span class="text-label-sans-bold font-label-sans-bold text-on-surface-variant block mb-1">TOTAL INGESTED</span>
+<span class="text-headline-md font-headline-md text-on-surface font-bold">48</span>
+<span class="text-label-mono-sm font-label-mono-sm text-outline block mt-0.5">100% parsed</span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-3">
+<span class="text-label-sans-bold font-label-sans-bold text-secondary block mb-1">TIER 1 MATCH</span>
+<span class="text-headline-md font-headline-md text-secondary font-bold">12</span>
+<span class="text-label-mono-sm font-label-mono-sm text-secondary block mt-0.5">≥ 80% Suitability</span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-3">
+<span class="text-label-sans-bold font-label-sans-bold text-primary block mb-1">REVIEW NEEDED</span>
+<span class="text-headline-md font-headline-md text-primary font-bold">8</span>
+<span class="text-label-mono-sm font-label-mono-sm text-outline block mt-0.5">70% - 79%</span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-3">
+<span class="text-label-sans-bold font-label-sans-bold text-outline block mb-1">UNMATCHED</span>
+<span class="text-headline-md font-headline-md text-outline font-bold">28</span>
+<span class="text-label-mono-sm font-label-mono-sm text-outline block mt-0.5">&lt; 70% Cutoff</span>
+</div>
+</div>
+</div>
+<!-- Filter & Threshold Controls Bar -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-4 shadow-sm flex flex-col gap-4">
+<div class="flex flex-wrap items-center justify-between gap-4">
+<!-- Cohort Tab Toggles -->
+<div class="inline-flex p-1 rounded-lg bg-surface-container-low border border-outline-variant">
+<button class="px-3 py-1.5 rounded-lg text-body-sm font-body-sm font-semibold bg-surface-container-lowest text-primary shadow-sm border border-outline-variant/60">
+            All (48)
+          </button>
+<button class="px-3 py-1.5 rounded-lg text-body-sm font-body-sm font-medium text-on-surface-variant hover:text-on-surface transition-colors">
+            Tier 1 Matches (12)
+          </button>
+<button class="px-3 py-1.5 rounded-lg text-body-sm font-body-sm font-medium text-on-surface-variant hover:text-on-surface transition-colors">
+            Requires Review (8)
+          </button>
+<button class="px-3 py-1.5 rounded-lg text-body-sm font-body-sm font-medium text-on-surface-variant hover:text-on-surface transition-colors">
+            Below Threshold (28)
+          </button>
+</div>
+<!-- Quick Search -->
+<div class="relative w-72">
+<span class="material-symbols-outlined text-outline absolute left-2.5 top-2 text-lg" data-icon="search">search</span>
+<input class="w-full h-9 pl-9 pr-3 rounded-lg border border-outline-variant bg-surface-bright text-body-sm font-body-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20" placeholder="Filter by candidate or skill..." type="text"/>
+</div>
+</div>
+<!-- Algorithmic Control Sliders & Filters -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-3 border-t border-outline-variant/60 items-center">
+<!-- Score Range Slider -->
+<div class="space-y-1.5">
+<div class="flex items-center justify-between">
+<label class="text-label-sans-bold font-label-sans-bold text-on-surface-variant">MIN SUITABILITY SCORE</label>
+<span class="text-label-mono-sm font-label-mono-sm px-2 py-0.5 rounded bg-surface-container text-primary font-semibold border border-primary/20">70% - 100%</span>
+</div>
+<div class="relative flex items-center">
+<input class="w-full h-1.5 bg-outline-variant rounded-lg appearance-none cursor-pointer accent-primary" max="100" min="0" type="range" value="70"/>
+</div>
+</div>
+<!-- Skill Coverage Filter -->
+<div class="space-y-1.5">
+<div class="flex items-center justify-between">
+<label class="text-label-sans-bold font-label-sans-bold text-on-surface-variant">MANDATORY SKILL COVERAGE</label>
+<span class="text-label-mono-sm font-label-mono-sm text-outline">2 Required</span>
+</div>
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-label-mono-sm font-label-mono-sm bg-surface-container text-primary border border-outline-variant">
+              Python
+              <span class="material-symbols-outlined text-xs cursor-pointer" data-icon="close">close</span>
+</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-label-mono-sm font-label-mono-sm bg-surface-container text-primary border border-outline-variant">
+              Scikit-Learn
+              <span class="material-symbols-outlined text-xs cursor-pointer" data-icon="close">close</span>
+</span>
+<button class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded text-label-mono-sm font-label-mono-sm text-on-surface-variant hover:text-on-surface border border-dashed border-outline hover:border-on-surface transition-colors">
+<span class="material-symbols-outlined text-xs" data-icon="add">add</span>
+              Add Skill
+            </button>
+</div>
+</div>
+<!-- Experience Filter -->
+<div class="space-y-1.5">
+<div class="flex items-center justify-between">
+<label class="text-label-sans-bold font-label-sans-bold text-on-surface-variant">EXPERIENCE FLOOR</label>
+<span class="text-label-mono-sm font-label-mono-sm text-outline">Verified Seniority</span>
+</div>
+<div class="flex items-center gap-2">
+<select class="h-8 text-body-sm font-body-sm rounded-lg border border-outline-variant bg-surface-bright px-2.5 py-0 text-on-surface focus:outline-none focus:border-primary">
+<option selected="">&gt;= 4 Years</option>
+<option>&gt;= 2 Years</option>
+<option>&gt;= 6 Years</option>
+<option>&gt;= 8 Years</option>
+</select>
+<span class="text-body-sm font-body-sm text-outline">Filtering out 16 junior records</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Primary Bulk Candidates Ranking Data Table -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg shadow-sm overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant text-label-sans-bold font-label-sans-bold text-on-surface-variant uppercase tracking-wider">
+<th class="py-3 px-4 w-12 text-center">
+<input checked="" class="rounded border-outline text-primary focus:ring-0 cursor-pointer" type="checkbox"/>
+</th>
+<th class="py-3 px-3 w-16">Rank</th>
+<th class="py-3 px-4 min-w-[200px]">Candidate &amp; Title</th>
+<th class="py-3 px-4 min-w-[160px]">Suitability Score</th>
+<th class="py-3 px-4 min-w-[140px]">Vector Sim %</th>
+<th class="py-3 px-4 min-w-[150px]">Matched Skills</th>
+<th class="py-3 px-4 min-w-[160px]">Missing Critical Skills</th>
+<th class="py-3 px-4 min-w-[120px]">Experience</th>
+<th class="py-3 px-4 min-w-[130px]">Status</th>
+<th class="py-3 px-4 text-right min-w-[140px]">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/60 text-body-sm font-body-sm">
+<!-- ROW 1 (SELECTED) -->
+<tr class="hover:bg-surface-container-low transition-colors bg-surface-container/30">
+<td class="py-3 px-4 text-center">
+<input checked="" class="rounded border-outline text-primary focus:ring-0 cursor-pointer candidate-checkbox" type="checkbox"/>
+</td>
+<td class="py-3 px-3 font-label-mono-sm font-semibold text-primary">#1</td>
+<td class="py-3 px-4">
+<div class="font-semibold text-on-surface">Dr. Elena Rostova</div>
+<div class="text-body-sm text-outline">Lead ML Research Scientist</div>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<span class="text-label-mono-sm font-bold text-secondary">91/100</span>
+<div class="w-20 bg-surface-container-high rounded-full h-1.5 overflow-hidden">
+<div class="bg-secondary h-1.5 rounded-full" style="width: 91%"></div>
+</div>
+</div>
+</td>
+<td class="py-3 px-4 font-label-mono-sm text-on-surface">
+<span class="inline-flex items-center gap-1 text-secondary font-medium">
+<span class="material-symbols-outlined text-sm" data-icon="polyline">polyline</span>
+                  94.2% Cosine
+                </span>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-label-mono-sm font-label-mono-sm bg-surface-container text-primary font-medium">
+                  13/14 Matched
+                </span>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-label-mono-sm font-label-mono-sm bg-surface-container-high text-outline">
+                  None
+                </span>
+</td>
+<td class="py-3 px-4 font-label-mono-sm text-on-surface">8.5 Yrs</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-label-mono-sm font-label-mono-sm bg-secondary/10 text-secondary font-semibold border border-secondary/20">
+                  Recommended
+                </span>
+</td>
+<td class="py-3 px-4 text-right">
+<div class="inline-flex items-center gap-1">
+<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant hover:text-primary transition-colors" title="Quick Compare">
+<span class="material-symbols-outlined text-base" data-icon="compare_arrows">compare_arrows</span>
+</button>
+<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant hover:text-primary transition-colors" title="Full Report">
+<span class="material-symbols-outlined text-base" data-icon="assessment">assessment</span>
+</button>
+<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant hover:text-primary transition-colors" title="Download Summary">
+<span class="material-symbols-outlined text-base" data-icon="download">download</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- ROW 2 (SELECTED) -->
+<tr class="hover:bg-surface-container-low transition-colors bg-surface-container/30">
+<td class="py-3 px-4 text-center">
+<input checked="" class="rounded border-outline text-primary focus:ring-0 cursor-pointer candidate-checkbox" type="checkbox"/>
+</td>
+<td class="py-3 px-3 font-label-mono-sm font-semibold text-primary">#2</td>
+<td class="py-3 px-4">
+<div class="font-semibold text-on-surface">Marcus Chen</div>
+<div class="text-body-sm text-outline">Staff Machine Learning Engineer</div>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<span class="text-label-mono-sm font-bold text-secondary">88/100</span>
+<div class="w-20 bg-surface-container-high rounded-full h-1.5 overflow-hidden">
+<div class="bg-secondary h-1.5 rounded-full" style="width: 88%"></div>
+</div>
+</div>
+</td>
+<td class="py-3 px-4 font-label-mono-sm text-on-surface">
+<span class="inline-flex items-center gap-1 text-secondary font-medium">
+<span class="material-symbols-outlined text-sm" data-icon="polyline">polyline</span>
+                  89.1% Cosine
+                </span>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-label-mono-sm font-label-mono-sm bg-surface-container text-primary font-medium">
+                  12/14 Matched
+                </span>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-label-mono-sm font-label-mono-sm bg-surface-variant text-on-surface-variant">
+                  K8s
+                </span>
+</td>
+<td class="py-3 px-4 font-label-mono-sm text-on-surface">7.0 Yrs</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-label-mono-sm font-label-mono-sm bg-secondary/10 text-secondary font-semibold border border-secondary/20">
+                  Recommended
+                </span>
+</td>
+<td class="py-3 px-4 text-right">
+<div class="inline-flex items-center gap-1">
+<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant hover:text-primary transition-colors" title="Quick Compare">
+<span class="material-symbols-outlined text-base" data-icon="compare_arrows">compare_arrows</span>
+</button>
+<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant hover:text-primary transition-colors" title="Full Report">
+<span class="material-symbols-outlined text-base" data-icon="assessment">assessment</span>
+</button>
+<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant hover:text-primary transition-colors" title="Download Summary">
+<span class="material-symbols-outlined text-base" data-icon="download">download</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- ROW 3 (SELECTED) -->
+<tr class="hover:bg-surface-container-low transition-colors bg-surface-container/30">
+<td class="py-3 px-4 text-center">
+<input checked="" class="rounded border-outline text-primary focus:ring-0 cursor-pointer candidate-checkbox" type="checkbox"/>
+</td>
+<td class="py-3 px-3 font-label-mono-sm font-semibold text-primary">#3</td>
+<td class="py-3 px-4">
+<div class="font-semibold text-on-surface">Priya Nair</div>
+<div class="text-body-sm text-outline">Senior NLP Engineer</div>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<span class="text-label-mono-sm font-bold text-secondary">85/100</span>
+<div class="w-20 bg-surface-container-high rounded-full h-1.5 overflow-hidden">
+<div class="bg-secondary h-1.5 rounded-full" style="width: 85%"></div>
+</div>
+</div>
+</td>
+<td class="py-3 px-4 font-label-mono-sm text-on-surface">
+<span class="inline-flex items-center gap-1 text-secondary font-medium">
+<span class="material-symbols-outlined text-sm" data-icon="polyline">polyline</span>
+                  87.4% Cosine
+                </span>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-label-mono-sm font-label-mono-sm bg-surface-container text-primary font-medium">
+                  11/14 Matched
+                </span>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-label-mono-sm font-label-mono-sm bg-surface-variant text-on-surface-variant">
+                  Spark
+                </span>
+</td>
+<td class="py-3 px-4 font-label-mono-sm text-on-surface">6.0 Yrs</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-label-mono-sm font-label-mono-sm bg-secondary/10 text-secondary font-semibold border border-secondary/20">
+                  Recommended
+                </span>
+</td>
+<td class="py-3 px-4 text-right">
+<div class="inline-flex items-center gap-1">
+<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant hover:text-primary transition-colors" title="Quick Compare">
+<span class="material-symbols-outlined text-base" data-icon="compare_arrows">compare_arrows</span>
+</button>
+<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant hover:text-primary transition-colors" title="Full Report">
+<span class="material-symbols-outlined text-base" data-icon="assessment">assessment</span>
+</button>
+<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant hover:text-primary transition-colors" title="Download Summary">
+<span class="material-symbols-outlined text-base" data-icon="download">download</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- ROW 4 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-4 text-center">
+<input class="rounded border-outline text-primary focus:ring-0 cursor-pointer candidate-checkbox" type="checkbox"/>
+</td>
+<td class="py-3 px-3 font-label-mono-sm text-outline">#4</td>
+<td class="py-3 px-4">
+<div class="font-semibold text-on-surface">Alex Rivera</div>
+<div class="text-body-sm text-outline">ML Platform Developer</div>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<span class="text-label-mono-sm font-bold text-primary">82/100</span>
+<div class="w-20 bg-surface-container-high rounded-full h-1.5 overflow-hidden">
+<div class="bg-primary h-1.5 rounded-full" style="width: 82%"></div>
+</div>
+</div>
+</td>
+<td class="py-3 px-4 font-label-mono-sm text-on-surface">
+<span class="inline-flex items-center gap-1 text-primary font-medium">
+<span class="material-symbols-outlined text-sm" data-icon="polyline">polyline</span>
+                  83.0% Cosine
+                </span>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-label-mono-sm font-label-mono-sm bg-surface-container text-primary font-medium">
+                  11/14 Matched
+                </span>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-label-mono-sm font-label-mono-sm bg-surface-variant text-on-surface-variant">
+                  Ray Core
+                </span>
+</td>
+<td class="py-3 px-4 font-label-mono-sm text-on-surface">5.5 Yrs</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-label-mono-sm font-label-mono-sm bg-primary/10 text-primary font-semibold border border-primary/20">
+                  Recommended
+                </span>
+</td>
+<td class="py-3 px-4 text-right">
+<div class="inline-flex items-center gap-1">
+<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant hover:text-primary transition-colors" title="Quick Compare">
+<span class="material-symbols-outlined text-base" data-icon="compare_arrows">compare_arrows</span>
+</button>
+<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant hover:text-primary transition-colors" title="Full Report">
+<span class="material-symbols-outlined text-base" data-icon="assessment">assessment</span>
+</button>
+<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant hover:text-primary transition-colors" title="Download Summary">
+<span class="material-symbols-outlined text-base" data-icon="download">download</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- ROW 5 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-4 text-center">
+<input class="rounded border-outline text-primary focus:ring-0 cursor-pointer candidate-checkbox" type="checkbox"/>
+</td>
+<td class="py-3 px-3 font-label-mono-sm text-outline">#5</td>
+<td class="py-3 px-4">
+<div class="font-semibold text-on-surface">Sarah Jenkins</div>
+<div class="text-body-sm text-outline">Data Scientist / Modeling</div>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<span class="text-label-mono-sm font-bold text-on-surface">79/100</span>
+<div class="w-20 bg-surface-container-high rounded-full h-1.5 overflow-hidden">
+<div class="bg-primary-container h-1.5 rounded-full" style="width: 79%"></div>
+</div>
+</div>
+</td>
+<td class="py-3 px-4 font-label-mono-sm text-on-surface">
+<span class="inline-flex items-center gap-1 text-on-surface font-medium">
+<span class="material-symbols-outlined text-sm" data-icon="polyline">polyline</span>
+                  80.1% Cosine
+                </span>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-label-mono-sm font-label-mono-sm bg-surface-container text-primary font-medium">
+                  10/14 Matched
+                </span>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-1">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-label-mono-sm font-label-mono-sm bg-surface-variant text-on-surface-variant">TorchServe</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-label-mono-sm font-label-mono-sm bg-surface-variant text-on-surface-variant">CUDA</span>
+</div>
+</td>
+<td class="py-3 px-4 font-label-mono-sm text-on-surface">4.5 Yrs</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-label-mono-sm font-label-mono-sm bg-surface-variant text-on-surface-variant font-medium">
+                  Under Review
+                </span>
+</td>
+<td class="py-3 px-4 text-right">
+<div class="inline-flex items-center gap-1">
+<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant hover:text-primary transition-colors" title="Quick Compare">
+<span class="material-symbols-outlined text-base" data-icon="compare_arrows">compare_arrows</span>
+</button>
+<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant hover:text-primary transition-colors" title="Full Report">
+<span class="material-symbols-outlined text-base" data-icon="assessment">assessment</span>
+</button>
+<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant hover:text-primary transition-colors" title="Download Summary">
+<span class="material-symbols-outlined text-base" data-icon="download">download</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- ROW 6 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-4 text-center">
+<input class="rounded border-outline text-primary focus:ring-0 cursor-pointer candidate-checkbox" type="checkbox"/>
+</td>
+<td class="py-3 px-3 font-label-mono-sm text-outline">#6</td>
+<td class="py-3 px-4">
+<div class="font-semibold text-on-surface">David Kim</div>
+<div class="text-body-sm text-outline">Senior Backend / ML Ops</div>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<span class="text-label-mono-sm font-bold text-on-surface">74/100</span>
+<div class="w-20 bg-surface-container-high rounded-full h-1.5 overflow-hidden">
+<div class="bg-primary-container h-1.5 rounded-full" style="width: 74%"></div>
+</div>
+</div>
+</td>
+<td class="py-3 px-4 font-label-mono-sm text-on-surface">
+<span class="inline-flex items-center gap-1 text-on-surface font-medium">
+<span class="material-symbols-outlined text-sm" data-icon="polyline">polyline</span>
+                  76.5% Cosine
+                </span>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-label-mono-sm font-label-mono-sm bg-surface-container text-primary font-medium">
+                  9/14 Matched
+                </span>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-1">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-label-mono-sm font-label-mono-sm bg-surface-variant text-on-surface-variant">Transformers</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-label-mono-sm font-label-mono-sm bg-surface-variant text-on-surface-variant">PyTorch</span>
+</div>
+</td>
+<td class="py-3 px-4 font-label-mono-sm text-on-surface">5.0 Yrs</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-label-mono-sm font-label-mono-sm bg-surface-variant text-on-surface-variant font-medium">
+                  Under Review
+                </span>
+</td>
+<td class="py-3 px-4 text-right">
+<div class="inline-flex items-center gap-1">
+<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant hover:text-primary transition-colors" title="Quick Compare">
+<span class="material-symbols-outlined text-base" data-icon="compare_arrows">compare_arrows</span>
+</button>
+<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant hover:text-primary transition-colors" title="Full Report">
+<span class="material-symbols-outlined text-base" data-icon="assessment">assessment</span>
+</button>
+<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant hover:text-primary transition-colors" title="Download Summary">
+<span class="material-symbols-outlined text-base" data-icon="download">download</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- ROW 7 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-4 text-center">
+<input class="rounded border-outline text-primary focus:ring-0 cursor-pointer candidate-checkbox" type="checkbox"/>
+</td>
+<td class="py-3 px-3 font-label-mono-sm text-outline">#7</td>
+<td class="py-3 px-4">
+<div class="font-semibold text-on-surface">James Wilson</div>
+<div class="text-body-sm text-outline">Software Engineer (ML Focused)</div>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<span class="text-label-mono-sm font-bold text-error">68/100</span>
+<div class="w-20 bg-surface-container-high rounded-full h-1.5 overflow-hidden">
+<div class="bg-error h-1.5 rounded-full" style="width: 68%"></div>
+</div>
+</div>
+</td>
+<td class="py-3 px-4 font-label-mono-sm text-on-surface">
+<span class="inline-flex items-center gap-1 text-error font-medium">
+<span class="material-symbols-outlined text-sm" data-icon="polyline">polyline</span>
+                  71.2% Cosine
+                </span>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-label-mono-sm font-label-mono-sm bg-surface-container text-primary font-medium">
+                  8/14 Matched
+                </span>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-label-mono-sm font-label-mono-sm bg-error-container text-on-error-container">
+                  Scikit-Learn
+                </span>
+</td>
+<td class="py-3 px-4 font-label-mono-sm text-on-surface">3.5 Yrs</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-label-mono-sm font-label-mono-sm bg-error-container text-on-error-container font-medium">
+                  Screened Out
+                </span>
+</td>
+<td class="py-3 px-4 text-right">
+<div class="inline-flex items-center gap-1">
+<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant hover:text-primary transition-colors" title="Quick Compare">
+<span class="material-symbols-outlined text-base" data-icon="compare_arrows">compare_arrows</span>
+</button>
+<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant hover:text-primary transition-colors" title="Full Report">
+<span class="material-symbols-outlined text-base" data-icon="assessment">assessment</span>
+</button>
+<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant hover:text-primary transition-colors" title="Download Summary">
+<span class="material-symbols-outlined text-base" data-icon="download">download</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- ROW 8 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-4 text-center">
+<input class="rounded border-outline text-primary focus:ring-0 cursor-pointer candidate-checkbox" type="checkbox"/>
+</td>
+<td class="py-3 px-3 font-label-mono-sm text-outline">#8</td>
+<td class="py-3 px-4">
+<div class="font-semibold text-on-surface">Ananya Patel</div>
+<div class="text-body-sm text-outline">Associate Data Scientist</div>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<span class="text-label-mono-sm font-bold text-error">65/100</span>
+<div class="w-20 bg-surface-container-high rounded-full h-1.5 overflow-hidden">
+<div class="bg-error h-1.5 rounded-full" style="width: 65%"></div>
+</div>
+</div>
+</td>
+<td class="py-3 px-4 font-label-mono-sm text-on-surface">
+<span class="inline-flex items-center gap-1 text-error font-medium">
+<span class="material-symbols-outlined text-sm" data-icon="polyline">polyline</span>
+                  68.0% Cosine
+                </span>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-label-mono-sm font-label-mono-sm bg-surface-container text-primary font-medium">
+                  7/14 Matched
+                </span>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-label-mono-sm font-label-mono-sm bg-error-container text-on-error-container">
+                  Vector DB
+                </span>
+</td>
+<td class="py-3 px-4 font-label-mono-sm text-on-surface">4.0 Yrs</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-label-mono-sm font-label-mono-sm bg-error-container text-on-error-container font-medium">
+                  Screened Out
+                </span>
+</td>
+<td class="py-3 px-4 text-right">
+<div class="inline-flex items-center gap-1">
+<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant hover:text-primary transition-colors" title="Quick Compare">
+<span class="material-symbols-outlined text-base" data-icon="compare_arrows">compare_arrows</span>
+</button>
+<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant hover:text-primary transition-colors" title="Full Report">
+<span class="material-symbols-outlined text-base" data-icon="assessment">assessment</span>
+</button>
+<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant hover:text-primary transition-colors" title="Download Summary">
+<span class="material-symbols-outlined text-base" data-icon="download">download</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination / Footer Bar -->
+<div class="px-4 py-3 bg-surface-container-low border-t border-outline-variant flex items-center justify-between text-body-sm font-body-sm text-on-surface-variant">
+<div>
+          Showing <span class="font-semibold text-on-surface">1 - 8</span> of <span class="font-semibold text-on-surface">48</span> parsed resumes
+        </div>
+<div class="flex items-center gap-2">
+<button class="p-1.5 rounded border border-outline-variant bg-surface-container-lowest text-outline hover:text-on-surface disabled:opacity-40" disabled="">
+<span class="material-symbols-outlined text-sm" data-icon="chevron_left">chevron_left</span>
+</button>
+<span class="px-2 py-0.5 text-label-mono-sm font-label-mono-sm text-primary font-bold">1</span>
+<span class="px-2 py-0.5 text-label-mono-sm font-label-mono-sm hover:text-on-surface cursor-pointer">2</span>
+<span class="px-2 py-0.5 text-label-mono-sm font-label-mono-sm hover:text-on-surface cursor-pointer">3</span>
+<button class="p-1.5 rounded border border-outline-variant bg-surface-container-lowest text-on-surface hover:bg-surface-container-high">
+<span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- ========================================================================= -->
+<!-- 4. BULK ACTION FLOATING BAR (Contextual Selection Overlay)                 -->
+<!-- ========================================================================= -->
+<aside class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-inverse-surface text-inverse-on-surface px-5 py-3 rounded-xl shadow-2xl border border-outline/40 flex items-center gap-6 animate-fade-in">
+<div class="flex items-center gap-3">
+<div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-sm font-bold" data-icon="check">check</span>
+</div>
+<div>
+<div class="text-body-sm font-body-sm font-semibold text-white">
+          3 Candidates Selected
+        </div>
+<div class="text-label-mono-sm font-label-mono-sm text-surface-variant truncate max-w-sm">
+          Dr. Elena Rostova, Marcus Chen, Priya Nair
+        </div>
+</div>
+</div>
+<div class="h-6 w-px bg-outline/50"></div>
+<div class="flex items-center gap-2.5">
+<!-- Compare Selected -->
+<button class="h-8 px-3 rounded-lg bg-surface-container-lowest text-on-surface hover:bg-surface-container-low text-body-sm font-body-sm font-semibold transition-colors flex items-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-base text-primary" data-icon="compare_arrows">compare_arrows</span>
+<span>Compare Selected (Side-by-Side)</span>
+</button>
+<!-- Batch Export PDF Summaries -->
+<button class="h-8 px-3 rounded-lg border border-outline-variant text-white hover:bg-surface-container-high/20 text-body-sm font-body-sm font-medium transition-colors flex items-center gap-1.5">
+<span class="material-symbols-outlined text-base" data-icon="picture_as_pdf">picture_as_pdf</span>
+<span>Batch Export PDF</span>
+</button>
+<!-- Move to Interview Stage -->
+<button class="h-8 px-3 rounded-lg bg-secondary text-on-secondary hover:bg-secondary/90 text-body-sm font-body-sm font-semibold transition-colors flex items-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-base" data-icon="send">send</span>
+<span>Move to Interview Stage</span>
+</button>
+<!-- Deselect Action -->
+<button class="p-1 rounded text-surface-variant hover:text-white transition-colors ml-1" title="Clear selection">
+<span class="material-symbols-outlined text-base" data-icon="close">close</span>
+</button>
+</div>
+</aside>
+<!-- Lightweight Inline Behavior Script -->
+<script>
+    // Micro-interaction for candidate checkbox toggles
+    document.addEventListener('DOMContentLoaded', () => {
+      const checkboxes = document.querySelectorAll('.candidate-checkbox');
+      checkboxes.forEach(cb => {
+        cb.addEventListener('change', (e) => {
+          const row = e.target.closest('tr');
+          if (e.target.checked) {
+            row.classList.add('bg-surface-container/30');
+          } else {
+            row.classList.remove('bg-surface-container/30');
+          }
+        });
+      });
+    });
+  </script>
+</body></html>

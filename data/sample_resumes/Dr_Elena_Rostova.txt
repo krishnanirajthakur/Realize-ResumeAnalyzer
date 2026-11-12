@@ -1,0 +1,38 @@
+Dr. Elena Rostova
+Email: elena.rostova@example.com | Phone: +1-415-555-0192 | San Francisco, CA
+
+Professional Summary
+Senior Machine Learning and Backend Systems Engineer with over 7 years of specialized industry experience architecting resilient data platforms, scalable microservices, and classical NLP engines. Proven track record in Scikit-Learn, Python, Docker, Kubernetes, and PostgreSQL.
+
+Technical Skills
+- Programming Languages: Python, SQL, C++, Bash
+- Machine Learning & NLP: Scikit-Learn, Pandas, NumPy, SciPy, NLTK, TF-IDF, Feature Engineering, Classification, Regression
+- Backend & Cloud: FastAPI, Flask, PostgreSQL, Redis, Docker, Kubernetes, AWS, Linux
+- DevOps & Tools: CI/CD, GitHub Actions, Git, Jira, Unit Testing, Pytest, Agile, Scrum
+
+Professional Experience
+Lead Machine Learning Engineer | HyperScale AI Labs
+03/2021 - Present
+- Architected high-throughput classical text classification and retrieval microservices using Python, FastAPI, and Scikit-Learn, serving 50M+ queries monthly.
+- Deployed fault-tolerant containerized applications using Docker and Kubernetes on AWS cloud infrastructure.
+- Designed PostgreSQL schema optimizations and Redis caching layers, reducing API query latency by 45%.
+- Maintained automated CI/CD deployment workflows and enforced 95%+ unit test coverage with pytest.
+
+Senior Software Engineer | Quantum Data Systems
+01/2019 - 02/2021
+- Built automated data processing and feature engineering pipelines handling multi-gigabyte tabular datasets with Pandas and NumPy.
+- Developed predictive classification models with Scikit-Learn (Random Forest, Logistic Regression, Linear SVM) achieving 93% precision.
+- Partnered with product and DevOps teams in an Agile Scrum cadence using Jira for sprint milestones.
+
+Software Engineer | Apex Informatics
+06/2017 - 12/2018
+- Developed backend REST APIs with Python and Flask integrated with relational PostgreSQL databases.
+- Automated system testing and integration pipelines using Linux shell scripts and Git.
+
+Educational Qualifications
+- Ph.D. in Computer Science | Stanford University (2017)
+- Bachelor of Science in Computer Science | UC Berkeley (2013)
+
+Key Projects
+- Enterprise NLP Search Engine: Engineered a deterministic TF-IDF unigram/bigram similarity and ranking engine in Python, processing 2M+ documents with sub-100ms latency.
+- Scalable Microservices Orchestrator: Built containerized FastAPI microservices managed via Kubernetes on AWS with automated health monitoring.

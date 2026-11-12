@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ResumeIQ - Dataset &amp; Classical Model Evaluation</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-dim": "#d2d9f4",
+            "primary-fixed-dim": "#c3c0ff",
+            "on-tertiary": "#ffffff",
+            "secondary": "#006a61",
+            "primary": "#3525cd",
+            "surface-tint": "#4d44e3",
+            "tertiary-fixed": "#e1e0ff",
+            "on-tertiary-fixed": "#07006c",
+            "on-surface": "#131b2e",
+            "outline": "#777587",
+            "surface-container-lowest": "#ffffff",
+            "inverse-primary": "#c3c0ff",
+            "on-primary": "#ffffff",
+            "tertiary": "#3130c0",
+            "inverse-surface": "#283044",
+            "on-secondary-fixed": "#00201d",
+            "error-container": "#ffdad6",
+            "outline-variant": "#c7c4d8",
+            "secondary-container": "#86f2e4",
+            "surface-variant": "#dae2fd",
+            "on-surface-variant": "#464555",
+            "background": "#faf8ff",
+            "inverse-on-surface": "#eef0ff",
+            "tertiary-fixed-dim": "#c0c1ff",
+            "on-primary-container": "#dad7ff",
+            "tertiary-container": "#4b4dd8",
+            "surface-container-highest": "#dae2fd",
+            "secondary-fixed-dim": "#6bd8cb",
+            "on-secondary-container": "#006f66",
+            "on-tertiary-fixed-variant": "#2f2ebe",
+            "on-primary-fixed": "#0f0069",
+            "secondary-fixed": "#89f5e7",
+            "on-error-container": "#93000a",
+            "on-primary-fixed-variant": "#3323cc",
+            "surface-container": "#eaedff",
+            "on-error": "#ffffff",
+            "error": "#ba1a1a",
+            "primary-container": "#4f46e5",
+            "on-secondary-fixed-variant": "#005049",
+            "primary-fixed": "#e2dfff",
+            "surface-container-low": "#f2f3ff",
+            "on-background": "#131b2e",
+            "on-secondary": "#ffffff",
+            "surface-bright": "#faf8ff",
+            "on-tertiary-container": "#d9d8ff",
+            "surface-container-high": "#e2e7ff",
+            "surface": "#faf8ff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-xl": "1.5rem",
+            "space-sm": "0.5rem",
+            "margin": "1.5rem",
+            "space-2xl": "2rem",
+            "space-xs": "0.25rem",
+            "space-2xs": "0.125rem",
+            "margin-mobile": "1rem",
+            "space-lg": "1rem",
+            "gutter-lg": "1.5rem",
+            "space-md": "0.75rem",
+            "gutter": "1rem"
+          },
+          "fontFamily": {
+            "body-md": ["Inter"],
+            "label-mono-md": ["JetBrains Mono"],
+            "headline-sm": ["Inter"],
+            "label-sans-bold": ["Inter"],
+            "headline-xl": ["Inter"],
+            "body-sm": ["Inter"],
+            "headline-lg": ["Inter"],
+            "label-mono-sm": ["JetBrains Mono"],
+            "headline-lg-mobile": ["Inter"],
+            "headline-md": ["Inter"],
+            "body-lg": ["Inter"]
+          },
+          "fontSize": {
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "label-mono-md": ["13px", { "lineHeight": "18px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "headline-sm": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "label-sans-bold": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }],
+            "headline-xl": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.025em", "fontWeight": "700" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "label-mono-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+            "headline-lg-mobile": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      font-size: 18px;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased selection:bg-primary selection:text-on-primary">
+<!-- ==================== SIDE NAVIGATION BAR (SHARED COMPONENT) ==================== -->
+<aside class="fixed left-0 top-0 bottom-0 z-40 w-64 bg-surface-container-lowest border-r border-outline-variant flex flex-col justify-between">
+<!-- Brand / Header -->
+<div class="p-space-lg border-b border-outline-variant">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary shadow-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">analytics</span>
+</div>
+<div>
+<div class="text-headline-md font-headline-md font-bold tracking-tight text-on-surface">ResumeIQ</div>
+<div class="text-body-sm font-body-sm text-on-surface-variant">Talent Intelligence Suite</div>
+</div>
+</div>
+<!-- Workspace Selector -->
+<button class="w-full mt-4 flex items-center justify-between px-3 py-1.5 rounded-lg border border-outline-variant bg-surface-container-low hover:bg-surface-container transition-colors duration-150 text-left">
+<div class="flex items-center gap-2 truncate">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-label-mono-sm font-label-mono-sm text-on-surface truncate">Engineering &amp; Science ML</span>
+</div>
+<span class="material-symbols-outlined text-outline">unfold_more</span>
+</button>
+</div>
+<!-- Navigation Tabs -->
+<nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150 font-medium" href="#">
+<span class="material-symbols-outlined">space_dashboard</span>
+<span class="text-body-md font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150 font-medium" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-body-md font-body-md">Resume Analysis</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150 font-medium" href="#">
+<span class="material-symbols-outlined">batch_prediction</span>
+<span class="text-body-md font-body-md">Bulk Screening</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150 font-medium" href="#">
+<span class="material-symbols-outlined">compare_arrows</span>
+<span class="text-body-md font-body-md">Candidate Comparison</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150 font-medium" href="#">
+<span class="material-symbols-outlined">psychology</span>
+<span class="text-body-md font-body-md">Skills Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150 font-medium" href="#">
+<span class="material-symbols-outlined">assessment</span>
+<span class="text-body-md font-body-md">Evaluation Reports</span>
+</a>
+<!-- ACTIVE NAVIGATION: Dataset & Model Evaluation -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-surface-container text-primary font-semibold border-l-2 border-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">tune</span>
+<span class="text-body-md font-body-md">Dataset &amp; Model Evaluation</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150 font-medium" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-body-md font-body-md">Settings</span>
+</a>
+</nav>
+<!-- Footer Controls -->
+<div class="p-3 border-t border-outline-variant space-y-1 bg-surface-container-lowest">
+<button class="w-full flex items-center justify-between px-3 py-2 text-label-sans-bold font-label-sans-bold text-primary bg-primary-fixed/40 hover:bg-primary-fixed rounded-lg transition-colors">
+<span>Switch Workspace</span>
+<span class="material-symbols-outlined text-primary text-sm">swap_horiz</span>
+</button>
+<div class="pt-2 border-t border-outline-variant/50">
+<a class="flex items-center gap-3 px-3 py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface text-body-sm font-body-sm transition-colors" href="#">
+<span class="material-symbols-outlined">memory</span>
+<span>System Health</span>
+<span class="ml-auto w-2 h-2 rounded-full bg-secondary"></span>
+</a>
+<a class="flex items-center gap-3 px-3 py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface text-body-sm font-body-sm transition-colors" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+<span>Help &amp; Docs</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- ==================== TOP NAVIGATION BAR (SHARED COMPONENT) ==================== -->
+<header class="sticky top-0 z-30 w-full pl-64 pr-6 h-16 flex items-center justify-between bg-surface-container-lowest border-b border-outline-variant">
+<div class="flex items-center gap-4">
+<!-- Search on Left / Context Link -->
+<div class="flex items-center gap-2">
+<div class="flex items-center gap-2 px-3 py-1 bg-surface-container-low rounded-lg border border-outline-variant">
+<span class="material-symbols-outlined text-outline">search</span>
+<input class="bg-transparent border-none text-body-sm font-body-sm focus:ring-0 w-64 p-0 text-on-surface placeholder:text-outline" placeholder="Search feature matrix or candidate IDs..." type="text"/>
+</div>
+</div>
+<div class="h-4 w-px bg-outline-variant"></div>
+<div class="text-body-md font-body-md text-on-surface-variant flex items-center gap-2">
+<span>Active Target:</span>
+<span class="text-primary font-semibold border-b-2 border-primary pb-0.5">Senior Machine Learning Engineer (REQ-8492)</span>
+</div>
+</div>
+<!-- Trailing Actions and Diagnostics Badge -->
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2 px-2.5 py-1 rounded-lg bg-surface-container border border-outline-variant text-label-mono-sm font-label-mono-sm text-secondary font-semibold">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+        Model Status: Active Classical Pipeline (Scikit-Learn / SciPy NLP)
+      </div>
+<button class="px-3 py-1.5 rounded-lg border border-outline-variant text-on-surface bg-surface-container-lowest hover:bg-surface-container-low text-body-sm font-body-sm font-medium transition-colors flex items-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined">refresh</span>
+        Run Model Diagnostics
+      </button>
+<button class="px-3 py-1.5 rounded-lg border border-outline-variant text-on-surface bg-surface-container-lowest hover:bg-surface-container-low text-body-sm font-body-sm font-medium transition-colors">
+        Export Report
+      </button>
+<button class="px-3 py-1.5 rounded-lg bg-primary-container text-on-primary hover:bg-primary transition-colors text-body-sm font-body-sm font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">add</span>
+        New Analysis
+      </button>
+<div class="h-4 w-px bg-outline-variant"></div>
+<div class="flex items-center gap-1">
+<button class="p-2 text-on-surface-variant hover:text-on-surface rounded-lg hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-on-surface rounded-lg hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined">tune</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center border border-outline-variant text-on-surface font-semibold text-xs ml-1">
+          DR
+        </div>
+</div>
+</div>
+</header>
+<!-- ==================== MAIN CONTENT CANVAS ==================== -->
+<main class="pl-64 p-space-xl max-w-[1680px] space-y-space-lg">
+<!-- Screen Title & Metadata Section -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<div class="flex items-center gap-2">
+<span class="text-label-mono-sm font-label-mono-sm px-2 py-0.5 rounded bg-surface-container text-primary font-semibold">CLASSICAL ML / DETERMINISTIC</span>
+<span class="text-body-sm font-body-sm text-outline">Version: v2.4.8-scikit</span>
+</div>
+<h1 class="text-headline-lg font-headline-lg text-on-surface tracking-tight mt-1">Dataset &amp; Classical Model Evaluation</h1>
+<p class="text-body-md font-body-md text-on-surface-variant mt-0.5">Benchmark statistical NLP vectorization, supervised logistic/SVC classifiers, and explainable feature importances.</p>
+</div>
+<!-- Action Cluster -->
+<div class="flex items-center gap-2">
+<div class="text-right">
+<div class="text-label-sans-bold font-label-sans-bold text-outline">LAST EVALUATION RUN</div>
+<div class="text-label-mono-md font-label-mono-md text-on-surface">Today at 14:28:10 UTC</div>
+</div>
+<button class="px-3.5 py-2 rounded-lg bg-surface-container border border-outline-variant text-primary font-semibold text-body-sm font-body-sm hover:bg-surface-container-high transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined">history</span>
+          Audit Logs
+        </button>
+</div>
+</div>
+<!-- 1. TECHNICAL ARCHITECTURE & RULE-BASED BANNER -->
+<div class="p-4 rounded-lg bg-surface-container-low border border-outline-variant flex items-start gap-4">
+<div class="p-2 rounded bg-surface-container text-primary mt-0.5 flex-shrink-0">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center justify-between">
+<h2 class="text-headline-sm font-headline-sm text-on-surface">Deterministic Classical Pipeline</h2>
+<span class="text-label-sans-bold font-label-sans-bold px-2 py-0.5 rounded bg-secondary-container/40 text-on-secondary-container">100% EXPLAINABLE &amp; FAIRNESS COMPLIANT</span>
+</div>
+<p class="text-body-md font-body-md text-on-surface-variant mt-1">
+          Feature Extraction via <span class="font-semibold text-on-surface">TF-IDF Vectorizer (scikit-learn)</span>, Cosine Similarity matrix calculation, and rule-based entity/skill extraction taxonomy. Fully offline, explainable, and compliant with privacy and fairness guidelines. No generative hallucinations or opaque neural latent weights.
+        </p>
+<div class="mt-2.5 flex flex-wrap gap-4 text-label-mono-sm font-label-mono-sm text-outline">
+<span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>scikit-learn 1.4.2</span>
+<span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>scipy.spatial.distance.cosine</span>
+<span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>NLTK Stopword Corpus v3.8</span>
+<span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>Deterministic Seed: 42</span>
+</div>
+</div>
+</div>
+<!-- 2 & 3. DUAL COLUMN BENTO: PIPELINE CONFIG + SUPERVISED BENCHMARK -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+<!-- LEFT: Classical NLP & Similarity Pipeline Configuration (5 cols) -->
+<section class="lg:col-span-5 bg-surface-container-lowest border border-outline-variant rounded-lg p-space-lg flex flex-col justify-between shadow-sm">
+<div>
+<div class="flex items-center justify-between pb-3 border-b border-outline-variant">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">tune</span>
+<h2 class="text-headline-sm font-headline-sm text-on-surface">NLP &amp; Similarity Pipeline Configuration</h2>
+</div>
+<span class="text-label-mono-sm font-label-mono-sm text-outline">scikit-learn</span>
+</div>
+<div class="mt-4 space-y-4">
+<!-- Parameter 1: N-Gram Range -->
+<div>
+<div class="flex justify-between items-center mb-1">
+<label class="text-label-sans-bold font-label-sans-bold text-on-surface-variant">N-GRAM RANGE</label>
+<span class="text-label-mono-sm font-label-mono-sm text-primary bg-surface-container px-1.5 py-0.5 rounded">ngram_range=(1,2)</span>
+</div>
+<select class="w-full bg-surface-container-lowest border border-outline-variant rounded text-body-md font-body-md text-on-surface py-1.5 px-3 focus:border-primary focus:ring-1 focus:ring-primary">
+<option selected="">(1, 2) Unigram + Bigram</option>
+<option>(1, 1) Strict Unigrams Only</option>
+<option>(1, 3) Unigram, Bigram &amp; Trigrams</option>
+</select>
+</div>
+<!-- Parameter 2: Stopwords Removal -->
+<div>
+<label class="text-label-sans-bold font-label-sans-bold text-on-surface-variant block mb-1">STOPWORDS REMOVAL</label>
+<div class="flex items-center justify-between p-2.5 rounded border border-outline-variant bg-surface-container-low">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">filter_alt</span>
+<span class="text-body-sm font-body-sm text-on-surface font-medium">Standard English + Domain Recruiter Stopwords (Active)</span>
+</div>
+<span class="text-label-mono-sm font-label-mono-sm text-secondary font-semibold">Active</span>
+</div>
+</div>
+<!-- Parameter 3 & 4: min_df & max_df -->
+<div class="grid grid-cols-2 gap-3">
+<div>
+<div class="flex justify-between items-center mb-1">
+<label class="text-label-sans-bold font-label-sans-bold text-on-surface-variant">MIN_DF (DOC FREQ)</label>
+<span class="text-label-mono-sm font-label-mono-sm text-on-surface">2</span>
+</div>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded text-label-mono-md font-label-mono-md text-on-surface py-1.5 px-3 focus:border-primary focus:ring-1 focus:ring-primary" type="number" value="2"/>
+<span class="text-label-mono-sm font-label-mono-sm text-outline mt-1 block">Prunes rare terms (&lt; 2 cvs)</span>
+</div>
+<div>
+<div class="flex justify-between items-center mb-1">
+<label class="text-label-sans-bold font-label-sans-bold text-on-surface-variant">MAX_DF (CORPUS MAX)</label>
+<span class="text-label-mono-sm font-label-mono-sm text-on-surface">0.90</span>
+</div>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded text-label-mono-md font-label-mono-md text-on-surface py-1.5 px-3 focus:border-primary focus:ring-1 focus:ring-primary" step="0.05" type="number" value="0.90"/>
+<span class="text-label-mono-sm font-label-mono-sm text-outline mt-1 block">Filters corpus boilerplate (&gt; 90%)</span>
+</div>
+</div>
+<!-- Parameter 5: Sublinear TF Scaling -->
+<div>
+<div class="flex justify-between items-center mb-1">
+<label class="text-label-sans-bold font-label-sans-bold text-on-surface-variant">SUBLINEAR TF SCALING</label>
+<span class="text-label-mono-sm font-label-mono-sm text-on-surface font-medium">1 + log(TF)</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded border border-outline-variant">
+<span class="text-body-sm font-body-sm text-on-surface-variant">Enabled (Prevents keyword stuffing skew)</span>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-label-mono-sm font-label-mono-sm bg-primary-fixed text-on-primary-fixed font-semibold">TRUE</span>
+</div>
+</div>
+<!-- Parameter 6: Distance Metric -->
+<div>
+<label class="text-label-sans-bold font-label-sans-bold text-on-surface-variant block mb-1">DISTANCE METRIC</label>
+<div class="flex items-center gap-2 p-2.5 rounded border border-outline-variant bg-surface-container-low text-body-sm font-body-sm font-medium text-on-surface">
+<span class="material-symbols-outlined text-outline">straighten</span>
+                Cosine Similarity (scipy.spatial.distance)
+              </div>
+</div>
+</div>
+</div>
+<div class="pt-6 mt-4 border-t border-outline-variant">
+<button class="w-full py-2.5 rounded bg-primary text-on-primary font-semibold text-body-md font-body-md hover:bg-tertiary transition-colors flex items-center justify-center gap-2 shadow-sm">
+<span class="material-symbols-outlined">restart_alt</span>
+            Recalculate Requisition Vectors
+          </button>
+</div>
+</section>
+<!-- RIGHT: Supervised Classical Classifier Benchmark (7 cols) -->
+<section class="lg:col-span-7 bg-surface-container-lowest border border-outline-variant rounded-lg p-space-lg flex flex-col justify-between shadow-sm">
+<div>
+<!-- Header and Benchmark Model Details -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-outline-variant gap-2">
+<div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">model_training</span>
+<h2 class="text-headline-sm font-headline-sm text-on-surface">Supervised Classical Classifier Benchmark</h2>
+</div>
+<div class="text-body-sm font-body-sm text-on-surface-variant mt-0.5">
+                Dataset: <span class="font-medium text-on-surface">Historical Internal Hiring Cohort (N = 840 labeled candidate outcomes: Suitable vs Screened Out)</span>
+</div>
+</div>
+<span class="text-label-mono-sm font-label-mono-sm text-secondary bg-surface-container px-2 py-1 rounded">5-fold Stratified CV</span>
+</div>
+<!-- Model Specs description -->
+<div class="mt-3 p-2.5 rounded bg-surface-container-low border border-outline-variant flex items-center justify-between text-body-sm font-body-sm text-on-surface">
+<span>Benchmark Model: <span class="font-semibold">Logistic Regression &amp; Support Vector Classifier (Linear SVC) with 5-fold Stratified Cross-Validation</span></span>
+<span class="text-label-mono-sm font-label-mono-sm text-outline">C = 1.0, L2 Reg</span>
+</div>
+<!-- Explainable Metric Summary Cards (5 Metrics) -->
+<div class="grid grid-cols-2 sm:grid-cols-5 gap-3 mt-4">
+<!-- Accuracy -->
+<div class="p-3 rounded border border-outline-variant bg-surface-container-lowest">
+<div class="text-label-sans-bold font-label-sans-bold text-outline">ACCURACY</div>
+<div class="text-headline-lg font-headline-lg text-on-surface mt-1">87.4%</div>
+<div class="text-label-mono-sm font-label-mono-sm text-secondary mt-0.5">± 1.2% (CV)</div>
+</div>
+<!-- Precision -->
+<div class="p-3 rounded border border-outline-variant bg-surface-container-lowest">
+<div class="text-label-sans-bold font-label-sans-bold text-outline">PRECISION</div>
+<div class="text-headline-lg font-headline-lg text-on-surface mt-1">85.2%</div>
+<div class="text-label-mono-sm font-label-mono-sm text-secondary mt-0.5">Class 1.0</div>
+</div>
+<!-- Recall -->
+<div class="p-3 rounded border border-outline-variant bg-surface-container-lowest">
+<div class="text-label-sans-bold font-label-sans-bold text-outline">RECALL</div>
+<div class="text-headline-lg font-headline-lg text-on-surface mt-1">89.1%</div>
+<div class="text-label-mono-sm font-label-mono-sm text-primary mt-0.5">Low Miss Rate</div>
+</div>
+<!-- F1-Score -->
+<div class="p-3 rounded border border-outline-variant bg-surface-container-lowest">
+<div class="text-label-sans-bold font-label-sans-bold text-outline">F1-SCORE</div>
+<div class="text-headline-lg font-headline-lg text-on-surface mt-1">87.1%</div>
+<div class="text-label-mono-sm font-label-mono-sm text-on-surface-variant mt-0.5">Harmonic Mean</div>
+</div>
+<!-- ROC-AUC -->
+<div class="p-3 rounded border border-outline-variant bg-surface-container-lowest col-span-2 sm:col-span-1">
+<div class="text-label-sans-bold font-label-sans-bold text-outline">ROC-AUC</div>
+<div class="text-headline-lg font-headline-lg text-primary mt-1">0.912</div>
+<div class="text-label-mono-sm font-label-mono-sm text-secondary mt-0.5">High Separation</div>
+</div>
+</div>
+<!-- Cross-Validation Fold Distribution Sparkline -->
+<div class="mt-4 p-3 rounded border border-outline-variant bg-surface-container-low">
+<div class="flex items-center justify-between text-label-sans-bold font-label-sans-bold text-outline mb-2">
+<span>STRATIFIED 5-FOLD VARIANCE (F1-SCORE)</span>
+<span class="font-mono text-label-mono-sm">Min: 85.8% | Max: 88.4%</span>
+</div>
+<div class="grid grid-cols-5 gap-2 items-end h-12 pt-2">
+<div class="bg-surface-container-high rounded-t flex flex-col items-center justify-end h-[86%] text-label-mono-sm font-label-mono-sm pb-1 text-on-surface-variant">86.2%</div>
+<div class="bg-surface-container-high rounded-t flex flex-col items-center justify-end h-[88%] text-label-mono-sm font-label-mono-sm pb-1 text-on-surface-variant">87.5%</div>
+<div class="bg-primary/20 border-t-2 border-primary rounded-t flex flex-col items-center justify-end h-[89%] text-label-mono-sm font-label-mono-sm pb-1 text-primary font-bold">88.4%</div>
+<div class="bg-surface-container-high rounded-t flex flex-col items-center justify-end h-[85%] text-label-mono-sm font-label-mono-sm pb-1 text-on-surface-variant">85.8%</div>
+<div class="bg-surface-container-high rounded-t flex flex-col items-center justify-end h-[87%] text-label-mono-sm font-label-mono-sm pb-1 text-on-surface-variant">87.6%</div>
+</div>
+<div class="grid grid-cols-5 gap-2 text-center text-label-mono-sm font-label-mono-sm text-outline mt-1">
+<span>Fold 1</span><span>Fold 2</span><span>Fold 3</span><span>Fold 4</span><span>Fold 5</span>
+</div>
+</div>
+</div>
+<div class="pt-4 mt-4 border-t border-outline-variant flex items-center justify-between text-body-sm font-body-sm text-on-surface-variant">
+<span>Decision Threshold: <span class="font-mono text-on-surface font-semibold">0.50 (Calibrated Platt Scaling)</span></span>
+<a class="text-primary hover:underline font-semibold flex items-center gap-1" href="#">
+            ROC / PR Curves Breakdown
+            <span class="material-symbols-outlined text-sm">open_in_new</span>
+</a>
+</div>
+</section>
+</div>
+<!-- 4. VISUAL EVALUATION MATRIX & FEATURE IMPORTANCE -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+<!-- 2x2 Confusion Matrix Heatmap (5 cols) -->
+<section class="lg:col-span-5 bg-surface-container-lowest border border-outline-variant rounded-lg p-space-lg shadow-sm">
+<div class="flex items-center justify-between pb-3 border-b border-outline-variant">
+<div>
+<h2 class="text-headline-sm font-headline-sm text-on-surface">2x2 Confusion Matrix Heatmap</h2>
+<div class="text-body-sm font-body-sm text-on-surface-variant">Test Split (N = 840 candidates)</div>
+</div>
+<span class="text-label-mono-sm font-label-mono-sm px-2 py-0.5 rounded bg-surface-container text-on-surface font-medium">Calibrated Cutoff: 0.50</span>
+</div>
+<!-- Matrix Diagram -->
+<div class="mt-4">
+<div class="grid grid-cols-12 gap-2 text-center items-center">
+<!-- Top Labels: Predicted -->
+<div class="col-span-3"></div>
+<div class="col-span-9 grid grid-cols-2 text-label-sans-bold font-label-sans-bold text-on-surface-variant pb-1">
+<div>PREDICTED SUITABLE</div>
+<div>PREDICTED SCREENED OUT</div>
+</div>
+<!-- Actual Row 1: Suitable -->
+<div class="col-span-3 text-right pr-2">
+<span class="text-label-sans-bold font-label-sans-bold text-on-surface-variant block leading-tight">ACTUAL<br/>SUITABLE</span>
+</div>
+<div class="col-span-9 grid grid-cols-2 gap-2">
+<!-- True Positive -->
+<div class="p-3.5 rounded bg-secondary-container/30 border border-secondary/40 text-left relative overflow-hidden">
+<div class="text-label-sans-bold font-label-sans-bold text-secondary">TRUE POSITIVE (TP)</div>
+<div class="text-headline-xl font-headline-xl text-on-surface font-bold mt-1">382</div>
+<div class="text-body-sm font-body-sm text-on-surface-variant mt-0.5">Suitable &amp; Hired</div>
+<span class="absolute right-2 bottom-2 text-label-mono-sm font-label-mono-sm text-secondary font-bold">45.5%</span>
+</div>
+<!-- False Negative -->
+<div class="p-3.5 rounded bg-error-container/20 border border-error/30 text-left relative overflow-hidden">
+<div class="text-label-sans-bold font-label-sans-bold text-error">FALSE NEGATIVE (FN)</div>
+<div class="text-headline-xl font-headline-xl text-on-surface font-bold mt-1">47</div>
+<div class="text-body-sm font-body-sm text-on-surface-variant mt-0.5">Missed Strong Candidate</div>
+<span class="absolute right-2 bottom-2 text-label-mono-sm font-label-mono-sm text-error font-bold">5.6%</span>
+</div>
+</div>
+<!-- Actual Row 2: Screened Out -->
+<div class="col-span-3 text-right pr-2">
+<span class="text-label-sans-bold font-label-sans-bold text-on-surface-variant block leading-tight">ACTUAL<br/>SCREENED OUT</span>
+</div>
+<div class="col-span-9 grid grid-cols-2 gap-2">
+<!-- False Positive -->
+<div class="p-3.5 rounded bg-surface-container border border-outline-variant text-left relative overflow-hidden">
+<div class="text-label-sans-bold font-label-sans-bold text-on-surface-variant">FALSE POSITIVE (FP)</div>
+<div class="text-headline-xl font-headline-xl text-on-surface font-bold mt-1">66</div>
+<div class="text-body-sm font-body-sm text-on-surface-variant mt-0.5">Rejected at Tech Screen</div>
+<span class="absolute right-2 bottom-2 text-label-mono-sm font-label-mono-sm text-on-surface-variant font-bold">7.9%</span>
+</div>
+<!-- True Negative -->
+<div class="p-3.5 rounded bg-surface-container-high border border-outline text-left relative overflow-hidden">
+<div class="text-label-sans-bold font-label-sans-bold text-on-surface">TRUE NEGATIVE (TN)</div>
+<div class="text-headline-xl font-headline-xl text-on-surface font-bold mt-1">345</div>
+<div class="text-body-sm font-body-sm text-on-surface-variant mt-0.5">Accurately Screened Out</div>
+<span class="absolute right-2 bottom-2 text-label-mono-sm font-label-mono-sm text-on-surface font-bold">41.0%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Interpretive notes footer -->
+<div class="mt-4 pt-3 border-t border-outline-variant text-body-sm font-body-sm text-on-surface-variant flex items-center justify-between">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary text-sm">check_circle</span>
+            High Sensitivity: Miss rate capped at 5.6%
+          </span>
+<span class="text-label-mono-sm font-label-mono-sm text-outline">Specificity: 83.9%</span>
+</div>
+</section>
+<!-- Top Feature Coefficients / TF-IDF Word Importance Table (7 cols) -->
+<section class="lg:col-span-7 bg-surface-container-lowest border border-outline-variant rounded-lg p-space-lg shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-3 border-b border-outline-variant">
+<div>
+<h2 class="text-headline-sm font-headline-sm text-on-surface">Top Feature Coefficients / TF-IDF Word Importance</h2>
+<div class="text-body-sm font-body-sm text-on-surface-variant">Linear model weights (\(\beta\)) extracted from L2 Logistic Classifier</div>
+</div>
+<div class="flex gap-2">
+<span class="text-label-sans-bold font-label-sans-bold px-2 py-1 rounded bg-secondary-container/30 text-on-secondary-container">Positive Correlation</span>
+<span class="text-label-sans-bold font-label-sans-bold px-2 py-1 rounded bg-error-container/30 text-on-error-container">Negative Penalty</span>
+</div>
+</div>
+<!-- Feature Table -->
+<div class="mt-3 overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant text-label-sans-bold font-label-sans-bold text-outline">
+<th class="py-2 px-3">FEATURE N-GRAM / TAXONOMY ENTITY</th>
+<th class="py-2 px-3">TF-IDF MEAN</th>
+<th class="py-2 px-3">COEFFICIENT (\(\beta\))</th>
+<th class="py-2 px-3 text-right">IMPACT MAGNITUDE</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/60 font-body-md text-body-md">
+<!-- Row 1: python -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-2 px-3">
+<span class="font-mono text-label-mono-md text-primary font-semibold">python</span>
+<span class="ml-2 px-1.5 py-0.5 rounded text-[10px] bg-primary-fixed text-on-primary-fixed font-sans font-semibold">CORE SKILL</span>
+</td>
+<td class="py-2 px-3 font-mono text-label-mono-sm text-on-surface-variant">0.482</td>
+<td class="py-2 px-3 font-mono text-label-mono-sm text-secondary font-bold">+2.41</td>
+<td class="py-2 px-3 text-right">
+<div class="w-24 h-2 bg-surface-container-high rounded ml-auto overflow-hidden">
+<div class="bg-secondary h-full rounded" style="width: 86%;"></div>
+</div>
+</td>
+</tr>
+<!-- Row 2: scikit-learn -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-2 px-3">
+<span class="font-mono text-label-mono-md text-primary font-semibold">scikit-learn</span>
+<span class="ml-2 px-1.5 py-0.5 rounded text-[10px] bg-primary-fixed text-on-primary-fixed font-sans font-semibold">FRAMEWORK</span>
+</td>
+<td class="py-2 px-3 font-mono text-label-mono-sm text-on-surface-variant">0.395</td>
+<td class="py-2 px-3 font-mono text-label-mono-sm text-secondary font-bold">+2.15</td>
+<td class="py-2 px-3 text-right">
+<div class="w-24 h-2 bg-surface-container-high rounded ml-auto overflow-hidden">
+<div class="bg-secondary h-full rounded" style="width: 77%;"></div>
+</div>
+</td>
+</tr>
+<!-- Row 3: nlp preprocessing -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-2 px-3">
+<span class="font-mono text-label-mono-md text-primary font-semibold">nlp preprocessing</span>
+<span class="ml-2 px-1.5 py-0.5 rounded text-[10px] bg-surface-container text-on-surface-variant font-sans font-semibold">BIGRAM</span>
+</td>
+<td class="py-2 px-3 font-mono text-label-mono-sm text-on-surface-variant">0.312</td>
+<td class="py-2 px-3 font-mono text-label-mono-sm text-secondary font-bold">+1.98</td>
+<td class="py-2 px-3 text-right">
+<div class="w-24 h-2 bg-surface-container-high rounded ml-auto overflow-hidden">
+<div class="bg-secondary h-full rounded" style="width: 70%;"></div>
+</div>
+</td>
+</tr>
+<!-- Row 4: feature engineering -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-2 px-3">
+<span class="font-mono text-label-mono-md text-primary font-semibold">feature engineering</span>
+<span class="ml-2 px-1.5 py-0.5 rounded text-[10px] bg-surface-container text-on-surface-variant font-sans font-semibold">BIGRAM</span>
+</td>
+<td class="py-2 px-3 font-mono text-label-mono-sm text-on-surface-variant">0.284</td>
+<td class="py-2 px-3 font-mono text-label-mono-sm text-secondary font-bold">+1.84</td>
+<td class="py-2 px-3 text-right">
+<div class="w-24 h-2 bg-surface-container-high rounded ml-auto overflow-hidden">
+<div class="bg-secondary h-full rounded" style="width: 65%;"></div>
+</div>
+</td>
+</tr>
+<!-- Row 5: sql -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-2 px-3">
+<span class="font-mono text-label-mono-md text-primary font-semibold">sql</span>
+<span class="ml-2 px-1.5 py-0.5 rounded text-[10px] bg-primary-fixed text-on-primary-fixed font-sans font-semibold">DATABASE</span>
+</td>
+<td class="py-2 px-3 font-mono text-label-mono-sm text-on-surface-variant">0.420</td>
+<td class="py-2 px-3 font-mono text-label-mono-sm text-secondary font-bold">+1.62</td>
+<td class="py-2 px-3 text-right">
+<div class="w-24 h-2 bg-surface-container-high rounded ml-auto overflow-hidden">
+<div class="bg-secondary h-full rounded" style="width: 58%;"></div>
+</div>
+</td>
+</tr>
+<!-- Negative Row 1: zero_experience -->
+<tr class="hover:bg-surface-container-low/50 transition-colors bg-error-container/5">
+<td class="py-2 px-3">
+<span class="font-mono text-label-mono-md text-error font-semibold">zero_experience</span>
+<span class="ml-2 px-1.5 py-0.5 rounded text-[10px] bg-error-container text-on-error-container font-sans font-semibold">TAXONOMY PENALTY</span>
+</td>
+<td class="py-2 px-3 font-mono text-label-mono-sm text-on-surface-variant">--</td>
+<td class="py-2 px-3 font-mono text-label-mono-sm text-error font-bold">-2.80</td>
+<td class="py-2 px-3 text-right">
+<div class="w-24 h-2 bg-surface-container-high rounded ml-auto overflow-hidden">
+<div class="bg-error h-full rounded" style="width: 100%;"></div>
+</div>
+</td>
+</tr>
+<!-- Negative Row 2: no_stem_degree -->
+<tr class="hover:bg-surface-container-low/50 transition-colors bg-error-container/5">
+<td class="py-2 px-3">
+<span class="font-mono text-label-mono-md text-error font-semibold">no_stem_degree</span>
+<span class="ml-2 px-1.5 py-0.5 rounded text-[10px] bg-error-container text-on-error-container font-sans font-semibold">RULE HEURISTIC</span>
+</td>
+<td class="py-2 px-3 font-mono text-label-mono-sm text-on-surface-variant">--</td>
+<td class="py-2 px-3 font-mono text-label-mono-sm text-error font-bold">-1.45</td>
+<td class="py-2 px-3 text-right">
+<div class="w-24 h-2 bg-surface-container-high rounded ml-auto overflow-hidden">
+<div class="bg-error h-full rounded" style="width: 52%;"></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="pt-3 mt-3 border-t border-outline-variant flex items-center justify-between text-body-sm font-body-sm text-on-surface-variant">
+<span>Displaying top 7 deterministic predictor weights from 1,420 vocabulary tokens.</span>
+<button class="text-primary font-semibold hover:underline flex items-center gap-1">
+<span>View Full Sparse Weight Vector</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</section>
+</div>
+<!-- 5. DATASET MANAGEMENT & VALIDATION PANEL -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-lg p-space-lg shadow-sm">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-outline-variant gap-3">
+<div>
+<h2 class="text-headline-sm font-headline-sm text-on-surface">Dataset Management &amp; Validation Panel</h2>
+<div class="text-body-sm font-body-sm text-on-surface-variant">Manage offline gold-standard benchmark datasets and ground truth audit sets</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1.5 rounded border border-outline-variant text-body-sm font-body-sm font-medium hover:bg-surface-container-low transition-colors flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm">file_download</span>
+            Export Confusion Matrix (CSV)
+          </button>
+<button class="px-3 py-1.5 rounded bg-primary text-on-primary text-body-sm font-body-sm font-medium hover:bg-tertiary transition-colors flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm">upload_file</span>
+            Upload Evaluation Dataset
+          </button>
+</div>
+</div>
+<!-- Dataset Table -->
+<div class="mt-4 overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant text-label-sans-bold font-label-sans-bold text-outline">
+<th class="py-2.5 px-3">DATASET FILENAME</th>
+<th class="py-2.5 px-3">SAMPLE COUNT</th>
+<th class="py-2.5 px-3">LABEL TYPE</th>
+<th class="py-2.5 px-3">VALIDATION SPLIT</th>
+<th class="py-2.5 px-3">LAST UPDATED</th>
+<th class="py-2.5 px-3 text-right">ACTIONS</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/60 text-body-sm font-body-sm text-on-surface">
+<!-- Row 1: Active Benchmark -->
+<tr class="hover:bg-surface-container-low/50">
+<td class="py-3 px-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">table_chart</span>
+<span class="font-mono font-medium text-on-surface">cohort_840_ml_engineer_labeled.parquet</span>
+<span class="px-1.5 py-0.2 rounded text-[10px] bg-secondary-container/40 text-on-secondary-container font-sans font-bold">CURRENT ACTIVE</span>
+</td>
+<td class="py-3 px-3 font-mono">840 verified profiles</td>
+<td class="py-3 px-3">Binary (Suitable / Rejected)</td>
+<td class="py-3 px-3 font-mono">80% Train / 20% Stratified Test</td>
+<td class="py-3 px-3 text-on-surface-variant font-mono text-label-mono-sm">2025-05-12 11:04 UTC</td>
+<td class="py-3 px-3 text-right space-x-2">
+<button class="text-primary hover:underline font-medium">Re-split</button>
+<button class="text-on-surface-variant hover:text-on-surface">Download</button>
+</td>
+</tr>
+<!-- Row 2: Secondary Dataset -->
+<tr class="hover:bg-surface-container-low/50">
+<td class="py-3 px-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-outline">table_chart</span>
+<span class="font-mono font-medium text-on-surface">senior_ds_applicant_gold_standard_v1.csv</span>
+</td>
+<td class="py-3 px-3 font-mono">1,215 verified profiles</td>
+<td class="py-3 px-3">Binary (Pass Phone Screen)</td>
+<td class="py-3 px-3 font-mono">5-fold Stratified K-Fold</td>
+<td class="py-3 px-3 text-on-surface-variant font-mono text-label-mono-sm">2025-04-28 09:30 UTC</td>
+<td class="py-3 px-3 text-right space-x-2">
+<button class="text-primary hover:underline font-medium">Activate</button>
+<button class="text-on-surface-variant hover:text-on-surface">Download</button>
+</td>
+</tr>
+<!-- Row 3: Bias Audit Dataset -->
+<tr class="hover:bg-surface-container-low/50">
+<td class="py-3 px-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-outline">table_chart</span>
+<span class="font-mono font-medium text-on-surface">fairness_audit_adversarial_synthetic_n400.jsonl</span>
+</td>
+<td class="py-3 px-3 font-mono">400 synthetic CV pairs</td>
+<td class="py-3 px-3">Adversarial Counterfactual</td>
+<td class="py-3 px-3 font-mono">Holdout Parity Evaluation</td>
+<td class="py-3 px-3 text-on-surface-variant font-mono text-label-mono-sm">2025-04-15 16:45 UTC</td>
+<td class="py-3 px-3 text-right space-x-2">
+<button class="text-primary hover:underline font-medium">Run Fairness Test</button>
+<button class="text-on-surface-variant hover:text-on-surface">Download</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Quick Health Metric Footer -->
+<div class="mt-4 pt-3 border-t border-outline-variant flex flex-col sm:flex-row items-center justify-between text-body-sm font-body-sm text-on-surface-variant gap-2">
+<div class="flex items-center gap-4">
+<span class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+            Data Integrity: 100% schema match
+          </span>
+<span class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+            No NaN or sparse null tokens detected
+          </span>
+</div>
+<div class="text-label-mono-sm font-label-mono-sm text-outline">Storage Engine: Local Encrypted SQLite / Parquet Mirror</div>
+</div>
+</section>
+</main>
+</body></html>

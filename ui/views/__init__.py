@@ -1,0 +1,9 @@
+# ResumeIQ UI Views Package
+from ui.views.dashboard import render_dashboard_view
+from ui.views.resume_analysis import render_resume_analysis_view
+from ui.views.bulk_screening import render_bulk_screening_view
+from ui.views.candidate_comparison import render_candidate_comparison_view
+from ui.views.skills_analytics import render_skills_analytics_view
+from ui.views.evaluation_reports import render_evaluation_reports_view
+from ui.views.model_evaluation import render_model_evaluation_view
+from ui.views.settings_view import render_settings_view
