@@ -1,5 +1,5 @@
 """
-ResumeIQ - Resume & Candidate Analysis System
+Realize - Resume & Candidate Analysis System
 Enterprise Streamlit Application Entry Point
 """
 import streamlit as st
@@ -38,7 +38,7 @@ def init_session_state():
 def main():
     # Streamlit Page Setup
     st.set_page_config(
-        page_title="ResumeIQ - Candidate & Resume Analysis System",
+        page_title="Realize - Resume & Candidate Analysis System",
         page_icon="🎯",
         layout="wide",
         initial_sidebar_state="expanded"
@@ -53,11 +53,11 @@ def main():
         st.markdown(
             """
             <div style="padding: 10px 0 16px 0; border-bottom: 1px solid #E2E8F0;">
-                <div style="font-size: 20px; font-weight: 700; color: #4F46E5; letter-spacing: -0.02em;">
-                    ResumeIQ
+                <div style="font-size: 22px; font-weight: 700; color: #4F46E5; letter-spacing: -0.02em;">
+                    Realize
                 </div>
                 <div style="font-size: 11px; color: #64748B; font-weight: 500;">
-                    Talent Intelligence & Candidate Analysis
+                    Resume & Candidate Analysis System
                 </div>
             </div>
             """,
@@ -105,7 +105,7 @@ def main():
             f"""
             <div style="font-size: 11px; color: #64748B; line-height: 1.6;">
                 <div><b>Session Pool:</b> <span class="font-mono">{len(history)} candidates</span></div>
-                <div><b>Benchmark Role:</b> {active_jd.title if active_jd else 'Not Loaded'}</div>
+                <div><b>Active Benchmark:</b> {active_jd.title if active_jd else 'None Loaded'}</div>
                 <div style="margin-top: 8px; color: #0D9488; font-weight: 600;">✓ Classical ML (Zero-AI)</div>
             </div>
             """,

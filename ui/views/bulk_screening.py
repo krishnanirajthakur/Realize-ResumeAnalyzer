@@ -1,10 +1,8 @@
 """
-Bulk Resume Screening & Ranking View
+Bulk Resume Screening & Ranking View - Realize
 """
 import streamlit as st
 import pandas as pd
-import os
-import glob
 from core.models import CandidateProfile, JobDescription, AnalysisResult
 from core.parsers.pdf_parser import parse_pdf
 from core.parsers.docx_parser import parse_docx
@@ -23,60 +21,59 @@ def render_bulk_screening_view():
     # Target Job Description Selection
     st.markdown("#### 1. Target Requisition Benchmark")
     active_jd = st.session_state.get("active_jd")
-    
-    col_j1, col_j2 = st.columns([2, 1])
-    with col_j1:
-        if active_jd:
-            st.success(f"Current Benchmark: **{active_jd.title}** ({len(active_jd.required_skills)} required skills, {active_jd.required_experience_years} yrs exp)")
+
+    if active_jd:
+        st.success(f"Active Benchmark: **{active_jd.title}** ({len(active_jd.required_skills)} required skills, {active_jd.required_experience_years} yrs exp)")
+    else:
+        st.info("No benchmark Job Description currently active. Provide the target Job Description below:")
+        
+    with st.expander("📝 Provide / Update Benchmark Job Description", expanded=(active_jd is None)):
+        jd_input_mode = st.radio("Benchmark Input Method:", ["Paste JD Text", "Upload JD File"], horizontal=True, key="bulk_jd_mode")
+        jd_input_text = ""
+        if jd_input_mode == "Paste JD Text":
+            jd_input_text = st.text_area("Paste Target Job Description:", height=150, placeholder="Paste requirements and qualifications...")
         else:
-            st.warning("No benchmark job description loaded yet.")
-            
-    with col_j2:
-        if st.button("Reload Sample Benchmark JD", use_container_width=True):
-            jd_path = "data/sample_jds/senior_python_engineer.txt"
-            with open(jd_path, "r", encoding="utf-8") as f:
-                jd_raw = f.read()
-            st.session_state["active_jd"] = parse_job_description(jd_raw, extract_skills_from_text)
-            st.rerun()
+            jd_upload = st.file_uploader("Upload JD Document:", type=["pdf", "docx", "txt"], key="bulk_jd_upload")
+            if jd_upload:
+                try:
+                    if jd_upload.name.lower().endswith(".pdf"):
+                        jd_input_text, _ = parse_pdf(jd_upload)
+                    elif jd_upload.name.lower().endswith(".docx"):
+                        jd_input_text, _ = parse_docx(jd_upload)
+                    else:
+                        jd_input_text = jd_upload.read().decode("utf-8", errors="ignore")
+                except Exception as e:
+                    st.error(f"Error reading JD: {str(e)}")
+
+        if st.button("Set as Active Benchmark Role", use_container_width=True):
+            if jd_input_text.strip():
+                new_jd = parse_job_description(jd_input_text, extract_skills_from_text)
+                st.session_state["active_jd"] = new_jd
+                st.success(f"Benchmark set to: '{new_jd.title}'")
+                st.rerun()
+            else:
+                st.warning("Please provide valid JD text first.")
 
     active_jd = st.session_state.get("active_jd")
     if not active_jd:
-        st.info("Please load or select a target Job Description before processing resumes in bulk.")
         return
 
     # File Ingestion Section
     st.markdown("---")
     st.markdown("#### 2. Candidate Document Ingestion")
     
-    upload_tab, sample_tab = st.tabs(["Upload Batch Files (PDF / DOCX)", "Process Sample Applicant Repository"])
-    
-    batch_files_to_process = []
-    
-    with upload_tab:
-        uploaded_files = st.file_uploader(
-            "Select multiple PDF or DOCX resumes:",
-            type=["pdf", "docx"],
-            accept_multiple_files=True,
-            key="bulk_file_uploader"
-        )
-        if uploaded_files:
-            batch_files_to_process = [(f.name, f) for f in uploaded_files]
-            st.caption(f"{len(uploaded_files)} files staged for processing.")
-
-    with sample_tab:
-        sample_paths = glob.glob("data/sample_resumes/*.pdf") + glob.glob("data/sample_resumes/*.docx")
-        st.write(f"Bundled demonstration resumes available: **{len(sample_paths)} files**")
-        if st.button("Stage All Sample Resumes for Evaluation", use_container_width=True):
-            batch_files_to_process = [(os.path.basename(p), p) for p in sample_paths]
-            st.session_state["staged_sample_batch"] = batch_files_to_process
-            st.success(f"Staged {len(batch_files_to_process)} sample resumes.")
-
-    if not batch_files_to_process and "staged_sample_batch" in st.session_state:
-        batch_files_to_process = st.session_state["staged_sample_batch"]
+    uploaded_files = st.file_uploader(
+        "Upload Multiple Candidate Resumes (PDF or DOCX):",
+        type=["pdf", "docx"],
+        accept_multiple_files=True,
+        key="bulk_file_uploader",
+        help="Select multiple candidate resume files to evaluate simultaneously against the benchmark requisition."
+    )
 
     # Start Batch Evaluation
-    if batch_files_to_process:
-        if st.button(f"Process Batch ({len(batch_files_to_process)} Resumes)", type="primary", use_container_width=True):
+    if uploaded_files:
+        st.caption(f"{len(uploaded_files)} candidate resume document(s) staged for batch evaluation.")
+        if st.button(f"Process Batch ({len(uploaded_files)} Resumes)", type="primary", use_container_width=True):
             progress_bar = st.progress(0.0)
             status_text = st.empty()
             
@@ -84,8 +81,9 @@ def render_bulk_screening_view():
             batch_results = []
             failed_files = []
 
-            for idx, (fname, file_item) in enumerate(batch_files_to_process):
-                status_text.text(f"Evaluating ({idx+1}/{len(batch_files_to_process)}): {fname}...")
+            for idx, file_item in enumerate(uploaded_files):
+                fname = file_item.name
+                status_text.text(f"Evaluating ({idx+1}/{len(uploaded_files)}): {fname}...")
                 try:
                     # Ingest
                     if fname.lower().endswith(".pdf"):
@@ -117,7 +115,7 @@ def render_bulk_screening_view():
                     # Fault tolerance: do not halt the entire batch
                     failed_files.append((fname, str(e)))
                     
-                progress_bar.progress((idx + 1) / len(batch_files_to_process))
+                progress_bar.progress((idx + 1) / len(uploaded_files))
 
             status_text.text("Batch evaluation completed.")
             
@@ -166,7 +164,7 @@ def render_bulk_screening_view():
     # Controls: Filter, Search, Sort
     c_f1, c_f2, c_f3 = st.columns([2, 1, 1])
     with c_f1:
-        search_query = st.text_input("Filter Candidates by Name or Skill:", placeholder="Search e.g. Python, Docker, Elena...")
+        search_query = st.text_input("Filter Candidates by Name or Skill:", placeholder="Search e.g. Python, Docker, Sarah...")
     with c_f2:
         tier_filter = st.selectbox("Filter by Fit Tier:", ["All Tiers", "Strong Fit", "Moderate Fit", "Partial Fit", "Limited Fit"])
     with c_f3:
@@ -222,7 +220,7 @@ def render_bulk_screening_view():
         st.download_button(
             label="Download Complete Batch Ranking (CSV)",
             data=csv_data,
-            file_name=f"resumeiq_batch_{active_jd.title.replace(' ', '_').lower()}.csv",
+            file_name=f"realize_batch_{active_jd.title.replace(' ', '_').lower()}.csv",
             mime="text/csv",
             use_container_width=True
         )

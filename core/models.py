@@ -1,5 +1,5 @@
 """
-ResumeIQ Core Data Models and Types
+Realize Core Data Models and Types
 """
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Any

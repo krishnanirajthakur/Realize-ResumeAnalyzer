@@ -33,7 +33,7 @@ def render_evaluation_reports_view():
         st.download_button(
             label="Download Candidate PDF Report",
             data=pdf_bytes,
-            file_name=f"resumeiq_report_{cand_filename_safe}.pdf",
+            file_name=f"realize_report_{cand_filename_safe}.pdf",
             mime="application/pdf",
             type="primary",
             use_container_width=True
@@ -44,7 +44,7 @@ def render_evaluation_reports_view():
         st.download_button(
             label="Export All Candidates (CSV)",
             data=all_csv,
-            file_name="resumeiq_all_candidates_summary.csv",
+            file_name="realize_all_candidates_summary.csv",
             mime="text/csv",
             use_container_width=True
         )

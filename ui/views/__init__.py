@@ -1,4 +1,4 @@
-# ResumeIQ UI Views Package
+# Realize UI Views Package
 from ui.views.dashboard import render_dashboard_view
 from ui.views.resume_analysis import render_resume_analysis_view
 from ui.views.bulk_screening import render_bulk_screening_view

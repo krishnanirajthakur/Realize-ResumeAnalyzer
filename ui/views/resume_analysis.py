@@ -1,9 +1,7 @@
 """
-Single Resume Analysis Workspace View
+Single Resume Analysis Workspace View - Realize
 """
 import streamlit as st
-import os
-import glob
 from core.models import CandidateProfile, JobDescription
 from core.parsers.pdf_parser import parse_pdf
 from core.parsers.docx_parser import parse_docx
@@ -25,67 +23,53 @@ def render_resume_analysis_view():
 
     with col_resume:
         st.markdown("#### 1. Candidate Resume Source")
-        resume_source = st.radio("Resume Source:", ["Upload File (PDF / DOCX)", "Select Sample Resume"], horizontal=True)
-        
         resume_text = ""
         resume_filename = "Uploaded_Resume"
         
-        if resume_source == "Upload File (PDF / DOCX)":
-            uploaded_file = st.file_uploader("Upload Resume (PDF, DOCX)", type=["pdf", "docx"], key="single_resume_uploader")
-            if uploaded_file is not None:
-                resume_filename = uploaded_file.name
-                try:
-                    if uploaded_file.name.lower().endswith(".pdf"):
-                        resume_text, _ = parse_pdf(uploaded_file)
-                    else:
-                        resume_text, _ = parse_docx(uploaded_file)
-                    st.success(f"Loaded '{uploaded_file.name}' ({len(resume_text.split())} words)")
-                except Exception as e:
-                    st.error(f"Error parsing resume: {str(e)}")
-        else:
-            samples = glob.glob("data/sample_resumes/*.pdf") + glob.glob("data/sample_resumes/*.docx")
-            if samples:
-                sample_map = {os.path.basename(s): s for s in samples}
-                sel_sample = st.selectbox("Choose Sample Resume:", list(sample_map.keys()))
-                if sel_sample:
-                    resume_filename = sel_sample
-                    path = sample_map[sel_sample]
-                    if path.lower().endswith(".pdf"):
-                        resume_text, _ = parse_pdf(path)
-                    else:
-                        resume_text, _ = parse_docx(path)
-                    st.caption(f"Loaded '{sel_sample}'")
-            else:
-                st.warning("No sample resumes found.")
+        uploaded_file = st.file_uploader(
+            "Upload Candidate Resume (PDF or DOCX):",
+            type=["pdf", "docx"],
+            key="single_resume_uploader",
+            help="Upload an authentic candidate resume document in PDF or DOCX format."
+        )
+        if uploaded_file is not None:
+            resume_filename = uploaded_file.name
+            try:
+                if uploaded_file.name.lower().endswith(".pdf"):
+                    resume_text, _ = parse_pdf(uploaded_file)
+                else:
+                    resume_text, _ = parse_docx(uploaded_file)
+                st.success(f"Loaded '{uploaded_file.name}' ({len(resume_text.split())} words extracted)")
+            except Exception as e:
+                st.error(f"Error parsing resume: {str(e)}")
 
     with col_jd:
         st.markdown("#### 2. Job Description Benchmark")
-        jd_source = st.radio("JD Source:", ["Load Sample JD", "Paste JD Text", "Upload JD File"], horizontal=True)
+        jd_input_method = st.radio("Provide Target Job Description via:", ["Paste JD Text", "Upload JD File (PDF/DOCX/TXT)"], horizontal=True)
         
         jd_text = ""
-        if jd_source == "Load Sample JD":
-            sample_jds = glob.glob("data/sample_jds/*.txt")
-            if sample_jds:
-                jd_map = {os.path.basename(j): j for j in sample_jds}
-                sel_jd = st.selectbox("Choose Benchmark Job Description:", list(jd_map.keys()))
-                with open(jd_map[sel_jd], "r", encoding="utf-8") as f:
-                    jd_text = f.read()
-            else:
-                st.warning("No sample JDs found.")
-        elif jd_source == "Paste JD Text":
-            jd_text = st.text_area("Paste Job Description Text:", height=180, placeholder="Paste target JD requirements here...")
+        if jd_input_method == "Paste JD Text":
+            jd_text = st.text_area(
+                "Paste Job Description:",
+                height=180,
+                placeholder="Paste the target job description requirements, responsibilities, and qualifications here..."
+            )
         else:
-            jd_file = st.file_uploader("Upload JD (PDF, DOCX, TXT)", type=["pdf", "docx", "txt"], key="single_jd_uploader")
+            jd_file = st.file_uploader("Upload JD Document:", type=["pdf", "docx", "txt"], key="single_jd_uploader")
             if jd_file is not None:
-                if jd_file.name.lower().endswith(".pdf"):
-                    jd_text, _ = parse_pdf(jd_file)
-                elif jd_file.name.lower().endswith(".docx"):
-                    jd_text, _ = parse_docx(jd_file)
-                else:
-                    jd_text = jd_file.read().decode("utf-8", errors="ignore")
+                try:
+                    if jd_file.name.lower().endswith(".pdf"):
+                        jd_text, _ = parse_pdf(jd_file)
+                    elif jd_file.name.lower().endswith(".docx"):
+                        jd_text, _ = parse_docx(jd_file)
+                    else:
+                        jd_text = jd_file.read().decode("utf-8", errors="ignore")
+                    st.success(f"Loaded '{jd_file.name}'")
+                except Exception as e:
+                    st.error(f"Error reading JD: {str(e)}")
 
     if not resume_text or not jd_text:
-        st.info("Please provide both a Candidate Resume and a Job Description above to initiate evaluation.")
+        st.info("Please upload a Candidate Resume and provide a Job Description above to initiate evaluation.")
         return
 
     # Interactive Review of Extracted Requirements before analysis
@@ -106,7 +90,7 @@ def render_resume_analysis_view():
 
     # Trigger Evaluation Button
     if st.button("Run Deterministic Candidate Evaluation", type="primary", use_container_width=True):
-        with st.spinner("Executing classical NLP and deterministic scoring pipeline..."):
+        with st.spinner("Executing Realize deterministic NLP and scoring engine..."):
             # Construct Final JD
             final_jd = JobDescription(
                 jd_id="active_jd",
@@ -149,7 +133,6 @@ def render_resume_analysis_view():
             
             # Save into session history if not already present
             existing_evals = st.session_state.get("evaluations_history", [])
-            # Replace if same candidate_id
             filtered = [e for e in existing_evals if e.candidate.candidate_id != profile.candidate_id]
             filtered.append(result)
             st.session_state["evaluations_history"] = filtered

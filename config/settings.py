@@ -1,5 +1,5 @@
 """
-ResumeIQ Configuration and Global Settings
+Realize Configuration and Global Settings
 """
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional

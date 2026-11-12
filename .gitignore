@@ -16,3 +16,7 @@ __pycache__/
 
 # Exceptions: Keep README and graphical_representation (g*.md)
 !README.md
+!README*.md
+!readme.md
+!graphical_representation.md
+!g*.md

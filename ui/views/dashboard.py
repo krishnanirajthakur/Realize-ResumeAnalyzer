@@ -1,5 +1,5 @@
 """
-Executive Analytics Dashboard View
+Executive Analytics Dashboard View - Realize
 """
 import streamlit as st
 import pandas as pd
@@ -9,7 +9,7 @@ from ui.components import render_kpi_card, render_fit_badge
 def render_dashboard_view():
     """Render the executive analytics overview."""
     st.markdown("## Executive Analytics Dashboard")
-    st.markdown("Real-time telemetry and candidate distribution across parsed requisitions.")
+    st.markdown("Real-time telemetry and candidate distribution across parsed requisitions in **Realize**.")
 
     evaluations = st.session_state.get("evaluations_history", [])
     
@@ -27,7 +27,7 @@ def render_dashboard_view():
         delta_type = "positive" if avg_score >= 70 else ("neutral" if avg_score >= 50 else "negative")
         render_kpi_card("Avg Suitability Score", f"{avg_score}%", "Linear weighted index", delta_type)
     with c3:
-        render_kpi_card("Active Requisitions", str(max(1, jds_processed)), "Target job profiles", "neutral")
+        render_kpi_card("Active Requisitions", str(max(0, jds_processed)), "Target job profiles", "neutral")
     with c4:
         delta_type = "negative" if flagged_candidates > 0 else "positive"
         render_kpi_card("Requiring Human Review", str(flagged_candidates), "Audit flags / partial data", delta_type)
@@ -35,55 +35,24 @@ def render_dashboard_view():
     st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
 
     if not evaluations:
-        st.info("No candidates evaluated yet in this session. Navigate to 'Resume Analysis' or 'Bulk Screening' to evaluate candidates.")
-        
-        # Option to load demonstration data
-        if st.button("Load Demonstration Applicant Pool (4 Candidates)"):
-            with st.spinner("Processing sample candidates against Senior Python & ML Engineer requisition..."):
-                from core.parsers.jd_parser import parse_job_description
-                from core.parsers.pdf_parser import parse_pdf
-                from core.preprocessing.text_cleaner import extract_contact_info, extract_candidate_name
-                from core.preprocessing.section_extractor import extract_sections
-                from core.matching.skill_extractor import extract_skills_from_text
-                from core.scoring.scoring_engine import CandidateScoringEngine
-                from core.models import CandidateProfile
-                import glob, os
-
-                # Load Sample JD
-                jd_path = "data/sample_jds/senior_python_engineer.txt"
-                with open(jd_path, "r", encoding="utf-8") as f:
-                    jd_raw = f.read()
-                jd = parse_job_description(jd_raw, extract_skills_from_text)
-                st.session_state["active_jd"] = jd
-
-                engine = CandidateScoringEngine(st.session_state.get("app_config").weights)
-                new_evals = []
-
-                # Evaluate sample PDFs
-                for pdf_file in glob.glob("data/sample_resumes/*.pdf"):
-                    fname = os.path.basename(pdf_file)
-                    text, _ = parse_pdf(pdf_file)
-                    sections = extract_sections(text)
-                    email, phone = extract_contact_info(text)
-                    cand_name = extract_candidate_name(text, fname)
-                    cand_skills = extract_skills_from_text(text)
-                    
-                    profile = CandidateProfile(
-                        candidate_id=fname,
-                        source_filename=fname,
-                        name=cand_name,
-                        email=email,
-                        phone=phone,
-                        raw_text=text,
-                        clean_text=text,
-                        sections=sections,
-                        skills=cand_skills
-                    )
-                    res = engine.evaluate_candidate(profile, jd)
-                    new_evals.append(res)
-
-                st.session_state["evaluations_history"] = new_evals
-                st.rerun()
+        st.info("No candidate resumes evaluated yet in this active session.")
+        st.markdown(
+            """
+            <div style="background-color: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 28px; text-align: center; margin-top: 16px;">
+                <div style="font-size: 18px; font-weight: 600; color: #0F172A; margin-bottom: 8px;">
+                    Welcome to Realize
+                </div>
+                <div style="font-size: 13px; color: #64748B; max-width: 560px; margin: 0 auto 16px auto; line-height: 1.6;">
+                    Upload resumes and benchmark Job Descriptions to compute transparent candidate suitability indicators,
+                    identify verified competencies, evaluate tenure gaps, and export audit-ready reports.
+                </div>
+                <div style="font-size: 12px; color: #4F46E5; font-weight: 500;">
+                    Select <b>Resume Analysis Workspace</b> for individual candidate screening, or <b>Bulk Screening & Ranking</b> to process multiple documents.
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
         return
 
     # Visualizations Row

@@ -113,7 +113,7 @@ def render_settings_view():
     st.markdown(
         """
         - **Zero Demographic Scoring**: Candidate attributes such as race, gender, age, nationality, address, and profile pictures are completely absent from scoring formulas.
-        - **Decision-Support Architecture**: ResumeIQ provides transparent mathematical ranking indicators; candidates are never automatically disqualified or rejected.
+        - **Decision-Support Architecture**: Realize provides transparent mathematical ranking indicators; candidates are never automatically disqualified or rejected.
         - **Zero Generative AI**: All algorithms are deterministic, auditable, and locally executed.
         """
     )

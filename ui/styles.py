@@ -1,5 +1,5 @@
 """
-ResumeIQ - Google Stitch Enterprise CSS Styling
+Realize - Google Stitch Enterprise CSS Styling
 """
 import streamlit as st
 

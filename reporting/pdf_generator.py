@@ -88,9 +88,9 @@ def generate_candidate_pdf_report(result: AnalysisResult) -> bytes:
     story = []
 
     # 1. Header Banner
-    story.append(Paragraph("ResumeIQ • Executive Candidate Evaluation", title_style))
+    story.append(Paragraph("Realize • Executive Candidate Evaluation", title_style))
     story.append(Paragraph(
-        f"Automated Deterministic Assessment • Generated {result.created_at[:10]} | Evaluation ID: {result.evaluation_id}",
+        f"Deterministic Talent Intelligence • Generated {result.created_at[:10]} | Evaluation ID: {result.evaluation_id}",
         subtitle_style
     ))
     story.append(HRFlowable(width="100%", thickness=1.5, color=PRIMARY_COLOR, spaceAfter=12))
@@ -251,7 +251,7 @@ def generate_candidate_pdf_report(result: AnalysisResult) -> bytes:
         [
             Paragraph(
                 f"<b>Audit Limitations & Missing Data Notes:</b><br/>{limitations_text}<br/><br/>"
-                "<b>Ethical AI Notice:</b> ResumeIQ utilizes 100% classical deterministic algorithms and TF-IDF statistical scoring. "
+                "<b>Ethical AI Notice:</b> Realize utilizes 100% classical deterministic algorithms and TF-IDF statistical scoring. "
                 "No generative AI, protected personal traits, or demographic indicators are incorporated into scoring. "
                 "This document is an advisory decision-support artifact; final hiring selections require human recruiter review.",
                 callout_style

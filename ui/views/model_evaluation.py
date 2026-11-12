@@ -1,17 +1,16 @@
 """
-Classical ML Dataset & Model Evaluation View
+Classical ML Dataset & Model Evaluation View - Realize
 """
 import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.express as px
-import plotly.figure_factory as ff
 from core.ml.evaluator import ModelEvaluator
 from ui.components import render_kpi_card
 
 def render_model_evaluation_view():
     st.markdown("## Dataset & Classical Model Evaluation")
-    st.markdown("Empirical benchmarking of supervised classical machine learning models (Logistic Regression, Linear SVM) with genuine telemetry.")
+    st.markdown("Empirical benchmarking of supervised classical machine learning models (Logistic Regression, Linear SVM) with genuine telemetry in **Realize**.")
 
     st.markdown(
         """
@@ -19,7 +18,7 @@ def render_model_evaluation_view():
             <span style="font-weight: 600; color: #3730A3;">Deterministic Classical ML Guarantee:</span>
             <span style="font-size: 13px; color: #4338CA;">
                 This module operates solely with classical statistical classifiers (Scikit-Learn). 
-                Zero deep learning, LLMs, or pre-trained generative AI models are utilized. All metrics are computed strictly from empirical cross-validation.
+                Zero deep learning, LLMs, or pre-trained generative AI models are utilized. All metrics are computed strictly from empirical evaluation on your provided dataset.
             </span>
         </div>
         """,
@@ -27,27 +26,46 @@ def render_model_evaluation_view():
     )
 
     # 1. Dataset Management Panel
-    st.markdown("#### 1. Dataset Management & Validation")
-    data_source = st.radio("Dataset Source:", ["Load Bundled Benchmark Dataset (40 Samples)", "Upload Labeled CSV Dataset"], horizontal=True)
+    st.markdown("#### 1. Labeled Dataset Upload")
+    
+    uploaded_csv = st.file_uploader(
+        "Upload Labeled Candidate CSV Dataset:",
+        type=["csv"],
+        key="ml_dataset_uploader",
+        help="Upload a CSV containing labeled resume or candidate profile text. Must include at least a text column and a binary or categorical label column."
+    )
 
     df: pd.DataFrame = None
 
-    if data_source == "Load Bundled Benchmark Dataset (40 Samples)":
-        csv_path = "data/benchmark_dataset.csv"
-        df = pd.read_csv(csv_path)
-        st.caption(f"Loaded bundled benchmark dataset with **{len(df)} samples** (Columns: {list(df.columns)})")
-    else:
-        uploaded_csv = st.file_uploader("Upload Labeled Candidate CSV (requires text and label columns):", type=["csv"], key="ml_dataset_uploader")
-        if uploaded_csv is not None:
+    if uploaded_csv is not None:
+        try:
             df = pd.read_csv(uploaded_csv)
-            st.caption(f"Uploaded dataset with **{len(df)} rows**.")
+            st.success(f"Successfully loaded dataset with **{len(df)} samples** and **{len(df.columns)} columns**.")
+        except Exception as e:
+            st.error(f"Error parsing uploaded CSV: {str(e)}")
 
     if df is None or len(df) == 0:
-        st.info("Please load or upload a dataset to begin model benchmarking.")
+        st.info("Please upload a labeled CSV dataset above to train and benchmark classical machine learning models.")
+        st.markdown(
+            """
+            <div style="background-color: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 20px; margin-top: 14px;">
+                <div style="font-size: 14px; font-weight: 600; color: #0F172A; margin-bottom: 6px;">
+                    Dataset Format Requirements:
+                </div>
+                <ul style="font-size: 13px; color: #64748B; margin: 0; padding-left: 20px; line-height: 1.6;">
+                    <li><b>File Format:</b> Standard CSV with UTF-8 encoding.</li>
+                    <li><b>Text Column:</b> A column containing candidate resume summaries, skills, or job profile text.</li>
+                    <li><b>Label Column:</b> A target outcome column (e.g. <code>1</code> for qualified/interviewed, <code>0</code> for unqualified).</li>
+                    <li><b>Sample Size:</b> Minimum 10 labeled samples required for train/test split.</li>
+                </ul>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
         return
 
     # Dataset Preview
-    with st.expander("Preview Dataset Records", expanded=False):
+    with st.expander("Preview Uploaded Dataset Records", expanded=False):
         st.dataframe(df.head(10), use_container_width=True)
 
     # Column Mapping
@@ -72,7 +90,7 @@ def render_model_evaluation_view():
         model_key = "linear_svm" if "Support Vector" in model_choice else "logistic_regression"
 
     with col_m2:
-        st.write("") # Spacer
+        st.write("")
         train_btn = st.button("Train & Evaluate Model", type="primary", use_container_width=True)
 
     if train_btn:
@@ -81,7 +99,7 @@ def render_model_evaluation_view():
                 evaluator = ModelEvaluator(model_type=model_key, test_size=test_split, random_state=42)
                 eval_results = evaluator.train_and_evaluate(df, text_col=text_column, label_col=label_column)
                 st.session_state["active_ml_evaluation"] = eval_results
-                st.success("Model training and validation completed successfully.")
+                st.success("Model training and empirical validation completed successfully.")
             except Exception as e:
                 st.error(f"Model evaluation error: {str(e)}")
 

@@ -172,7 +172,7 @@ def render_audit_callout(limitations: List[str], confidence: float):
             {lim_html}
         </ul>
         <div style="font-size: 11px; color: #92400E; margin-top: 8px;">
-            <em>Note: ResumeIQ is a deterministic decision-support tool. It does not auto-reject applicants.</em>
+            <em>Note: Realize is a deterministic decision-support tool. It does not auto-reject applicants.</em>
         </div>
     </div>
     """
